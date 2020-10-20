@@ -1,0 +1,5 @@
+{
+    "programmer": "AVR ISP",
+    "board": "arduino:avr:uno",
+    "sketch": "custom_lab_3/custom_lab_3.ino"
+}

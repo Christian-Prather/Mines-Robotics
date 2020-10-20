@@ -1,6 +1,6 @@
 // Libraries
 #include <PinChangeInt.h>
-
+#include <PID_v1.h>
 // Global Defines
 #define IN1 9
 #define IN2 10
@@ -9,11 +9,15 @@
 
 #define A 0
 #define B 1
+#define pwmA 3
+#define dirA 12
+#define pwmB 11
+#define dirB 13
 #define pushButton 2
 
-#define bump_forward 
-#define bump_left
-#define bump_right
+#define bumpForward 7
+#define bumpLeft 8
+#define bumpRight 2
 
 // Drive constants - dependent on robot configuration
 #define EncoderCountsPerRev 12.0
@@ -36,11 +40,18 @@ volatile unsigned int distanceTraveled = 0;
 int motorLeft_PWM = 180;
 int motorRight_PWM = 200;
 
+int milliSecondsPer90Deg = 0;
+int desiredCount;
+#define EncoderMotorLeft 7
+#define EncoderMotorRight 8
 // Global array for tracking move order (move, distance) or (move, degree)
 int moveList[] = {};
 
-// Helper functions
+double leftSetpoint, leftInput, leftOutput, rightSetpoint, rightInput, rightOutput;
+PID leftPID(&leftInput, &leftOutput, &leftSetpoint, 2, 5, 1, DIRECT);
+PID rightPID(&rightInput, &rightOutput, &rightSetpoint, 2, 5, 1, DIRECT);
 
+// Helper functions
 void resetPWM()
 {
     motorLeft_PWM = 180;
@@ -64,12 +75,13 @@ int calculateRunTime(int degrees)
 void turnRight(int degrees)
 {
     resetPWM();
+    calculateDesiredCount(degrees);
     // t = calculateRunTime(degrees) //Time to keep motors on
     while ((leftEncoderCount != desiredCount) || (rightEncoderCount != desiredCount))
     {
         adjustPWM();
-        run_motor(A, -motorA_PWM); //set this to a number between -255 and 255
-        run_motor(B, motorB_PWM);  //set this to a number between -255 and 255
+        run_motor(A, -motorLeft_PWM); //set this to a number between -255 and 255
+        run_motor(B, motorRight_PWM); //set this to a number between -255 and 255
     }
 
     run_motor(A, 0); //motors stop
@@ -80,30 +92,40 @@ void turnRight(int degrees)
 void turnLeft(int degrees)
 {
     resetPWM();
+    calculateDesiredCount(degrees);
     // t = calculateRunTime(degrees);
 
     while ((leftEncoderCount != desiredCount) || (rightEncoderCount != desiredCount))
     {
         adjustPWM();
-        run_motor(A, motorA_PWM);  //set this to a number between -255 and 255
-        run_motor(B, -motorA_PWM); //set this to a number between -255 and 255
+        run_motor(A, motorLeft_PWM);   //set this to a number between -255 and 255
+        run_motor(B, -motorRight_PWM); //set this to a number between -255 and 255
     }
 
     run_motor(A, 0); //motors stop
     run_motor(B, 0);
 }
 
+void calculateDesiredCount(int distance)
+{
+    unsigned long int revolutionsRequired = distance / DistancePerRev;
+
+    // TODO: Need to add a buffer here or will never exit this loop
+    desiredCount = revolutionsRequired * EncoderCountsPerRev;
+}
 void driveForward(int distance)
 {
     resetPWM();
     // unsigned long t;
     // t = distance * milliSecondsPerCM; //Time to keep motors on
 
-    int desiredCount;
-    unsigned long int revolutionsRequired = distance / DistancePerRev;
+    // int desiredCount;
+    // unsigned long int revolutionsRequired = distance / DistancePerRev;
 
-    // TODO: Need to add a buffer here or will never exit this loop
-    desiredCount = revolutionsRequired * EncoderCountsPerRev;
+    // // TODO: Need to add a buffer here or will never exit this loop
+    // desiredCount = revolutionsRequired * EncoderCountsPerRev;
+    leftSetpoint = desiredCount;
+    rightSetpoint = desiredCount;
     // Loop unitl the encoders read correct
     while ((leftEncoderCount != desiredCount) || (rightEncoderCount != desiredCount))
     {
@@ -112,8 +134,8 @@ void driveForward(int distance)
         // t = distance * milliSecondsPerCM; //Time to keep motors on
 
         //To drive forward, motors go in the same direction
-        run_motor(A, motorA_PWM); //change PWM to your calibrations
-        run_motor(B, motorB_PWM); //change PWM to your calibrations
+        run_motor(A, motorLeft_PWM);  //change PWM to your calibrations
+        run_motor(B, motorRight_PWM); //change PWM to your calibrations
         // delay(t);
         // run_motor(A, 0);
         // run_motor(B, 0);
@@ -126,21 +148,21 @@ void driveBackward(int distance)
     // unsigned long t;
     // t = distance * milliSecondsPerCM; //Time to keep motors on
 
-    int desiredCount;
-    unsigned long int revolutionsRequired = distance / DistancePerRev;
+    // int desiredCount;
+    // unsigned long int revolutionsRequired = distance / DistancePerRev;
 
-    // TODO: Need to add a buffer here or will never exit this loop
-    desiredCount = revolutionsRequired * EncoderCountsPerRev;
+    // // TODO: Need to add a buffer here or will never exit this loop
+    // desiredCount = revolutionsRequired * EncoderCountsPerRev;
     // Loop unitl the encoders read correct
-    while ((leftEncoderCount != desiredCount) || (rightEncoderCount != desiredCount))
+    while ((leftEncoderCount - desiredCount) > 5 || (rightEncoderCount - desiredCount) > 5)
     {
         adjustPWM();
 
         // t = distance * milliSecondsPerCM; //Time to keep motors on
 
         //To drive forward, motors go in the same direction
-        run_motor(A, -motorA_PWM); //change PWM to your calibrations
-        run_motor(B, -motorB_PWM); //change PWM to your calibrations
+        run_motor(A, -motorLeft_PWM);  //change PWM to your calibrations
+        run_motor(B, -motorRight_PWM); //change PWM to your calibrations
         // delay(t);
         // run_motor(A, 0);
         // run_motor(B, 0);
@@ -184,25 +206,33 @@ void idle()
 void adjustPWM()
 {
     // Adjust the pwm values based on the encoders similarity
-    if (leftEncoderCount > rightEncoderCount)
-    {
-        // The left wheel is spinning more than the right
-        // Speed up the right wheel by ratio
-        int delta = leftEncoderCount - rightEncoderCount;
-        // Keep it from overshooting 255
-        motorRight_PWM = min(motorRight_PWM + (deltat * 10), 255);
-    }
-    if (leftEncoderCount < rightEncoderCount)
-    {
-        int delta = rightEncoderCount - leftEncoderCount;
-        motorLeft_PWM = min(motorLeft_PWM + (delta * 10), 255)
-    }
+    // if (leftEncoderCount > rightEncoderCount)
+    // {
+    //     // The left wheel is spinning more than the right
+    //     // Speed up the right wheel by ratio
+    //     int delta = leftEncoderCount - rightEncoderCount;
+    //     // Keep it from overshooting 255
+    //     motorRight_PWM = min(motorRight_PWM + (deltat * 10), 255);
+    // }
+    // if (leftEncoderCount < rightEncoderCount)
+    // {
+    //     int delta = rightEncoderCount - leftEncoderCount;
+    //     motorLeft_PWM = min(motorLeft_PWM + (delta * 10), 255)
+    // }
+
+    leftPID.Compute();
+    rightPID.Compute();
+
+    motorLeft_PWM = leftOutput;
+    motorRight_PWM = rightOutput;
 }
 
 void setup()
 {
-    Serial.Println("Setting up.....");
+    Serial.println("Setting up.....");
     configure();
+    leftPID.SetMode(AUTOMATIC);
+    rightPID.SetMode(AUTOMATIC);
 }
 
 /* Inrementally check that the bot is on track with the distance it should be traveling
