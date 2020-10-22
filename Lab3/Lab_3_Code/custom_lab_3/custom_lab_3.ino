@@ -7,6 +7,11 @@
 
 */
 
+/*! \mainpage Lab 3 Code Documentation
+ *
+ */
+
+
 /// Libraries for interrupts and PID
 #include <PinChangeInt.h>
 #include <PID_v1.h>

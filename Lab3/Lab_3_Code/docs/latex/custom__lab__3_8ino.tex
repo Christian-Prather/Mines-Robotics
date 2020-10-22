@@ -1,0 +1,1045 @@
+\hypertarget{custom__lab__3_8ino}{}\doxysection{custom\+\_\+lab\+\_\+3/custom\+\_\+lab\+\_\+3.ino File Reference}
+\label{custom__lab__3_8ino}\index{custom\_lab\_3/custom\_lab\_3.ino@{custom\_lab\_3/custom\_lab\_3.ino}}
+
+
+A basic feedback controlled system for an Arduino based robot.  
+
+
+{\ttfamily \#include $<$Pin\+Change\+Int.\+h$>$}\newline
+{\ttfamily \#include $<$P\+I\+D\+\_\+v1.\+h$>$}\newline
+Include dependency graph for custom\+\_\+lab\+\_\+3.\+ino\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=248pt]{custom__lab__3_8ino__incl}
+\end{center}
+\end{figure}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_aa118db89564189dcf8c48ecbd79937d8}{I\+N1}}~9
+\begin{DoxyCompactList}\small\item\em Libraries for interrupts and P\+ID. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_ac2c663eb7de5a963911af77b65451fb6}{I\+N2}}~10
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_ae24e8a55f5b9660a35dc5cf8a5e8ba4a}{I\+N3}}~5
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a38caa48612155e36696b60d2aabc25ff}{I\+N4}}~6
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}~0
+\begin{DoxyCompactList}\small\item\em Motor control. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}{B}}~1
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_ab0d2ef04a0c5e78d6aa2a86d16763340}{pwmA}}~3
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a45b2c321c548bc6e6590cb52e902682c}{dirA}}~12
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a5498e555e8e5b7b15c273491c1c400bc}{pwmB}}~11
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a8d5954269c70b1bf93c75c08a9d2ef6f}{dirB}}~13
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a48cd43d2c1d009cedfc2dfd5dcc98c90}{push\+Button}}~2
+\begin{DoxyCompactList}\small\item\em Start stop button. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_af959618707a2cab567c4b1cb2039171d}{Encoder\+Counts\+Per\+Rev}}~12.\+0
+\begin{DoxyCompactList}\small\item\em Drive constants -\/ dependent on robot configuration. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a55f55362145c54d91e100ea0a7da2519}{Distance\+Per\+Rev}}~51.\+0
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a507e70837b49afe255681d8e70a75a07}{Degrees\+Per\+Rev}}~27.\+0
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a2e8a100362bc218f6adee79e6d7ed4c9}{Encoder\+Motor\+Left}}~7
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a5ab5ad43ba2d5195c1bceec1d0a8b6e1}{Encoder\+Motor\+Right}}~8
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}~0
+\begin{DoxyCompactList}\small\item\em Enum defines. \end{DoxyCompactList}\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a437ef08681e7210d6678427030446a54}{L\+E\+FT}}~1
+\item 
+\#define \mbox{\hyperlink{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}{R\+I\+G\+HT}}~-\/1
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_ad790de8aa0c96f45129961358d0c1f57}{reset\+P\+WM}} ()
+\begin{DoxyCompactList}\small\item\em Helper function for setting the P\+WM back to default value. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_acd2d19c21a2cf76aa9b444a50501f86a}{index\+Left\+Encoder\+Count}} ()
+\begin{DoxyCompactList}\small\item\em I\+SR for left encoder. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_a405bbbc7bba20d2ba7cb629dd4b77cf7}{index\+Right\+Encoder\+Count}} ()
+\begin{DoxyCompactList}\small\item\em I\+SR for incrementing right encoder. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_a68dd6118a65520802b5daec8c2c98035}{calculate\+Desired\+Count}} (int distance)
+\begin{DoxyCompactList}\small\item\em Calculate how many encoder counts we expect given the distance provided based on the bot intrinsics. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_a7e1293d305bcaf4d458a5675d466e58c}{calculate\+Desired\+Count\+Turn}} (int degrees)
+\begin{DoxyCompactList}\small\item\em Calculate how many encoder counts we expect given the degrees provided. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_a915894ac308e66eedd8d5402d4607fb7}{turn\+Right}} (int degrees)
+\begin{DoxyCompactList}\small\item\em Turn bot to given degrees. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_a8b7a447e91493be8a6fa88e36f19bc86}{turn\+Left}} (int degrees)
+\begin{DoxyCompactList}\small\item\em Turn bot right to given degrees. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_a5150ca610a62064e5825467063468a60}{drive\+Forward}} (int distance)
+\begin{DoxyCompactList}\small\item\em Function to drive bot forward until encoders are within range. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_ab6d76e41ee823aa0312085dddf5a2063}{drive\+Backward}} (int distance)
+\begin{DoxyCompactList}\small\item\em Drive the bot backwards. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_ae369b3765489ee8bd0ea791c1843630f}{configure}} ()
+\begin{DoxyCompactList}\small\item\em Function for configuration of pin states and interrupts. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_a83abbeda22fc5e6c2b35523b64199c1c}{idle}} ()
+\begin{DoxyCompactList}\small\item\em Default behavior when not driving, waits for the push\+Button to be pressed so it can execute next command Blocking function. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_adf16701efd300d45a4f489359aee8ac6}{adjust\+P\+WM}} ()
+\begin{DoxyCompactList}\small\item\em Run the P\+ID loop calculation and set out put to motors output in P\+WM. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_a4fc01d736fe50cf5b977f755b675f11d}{setup}} ()
+\begin{DoxyCompactList}\small\item\em Entry point of program handles serial setup and P\+ID config. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_afeb4f1c2c988579e1d753f4eb5bd2f92}{react\+\_\+left}} ()
+\begin{DoxyCompactList}\small\item\em This is the logic to execute if we hit a push button ideally this is never executed as we shoudl never actually hit the walls. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_ab14be4b6a0be263a85203cd29d029f26}{react\+\_\+right}} ()
+\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_ae1e8b0b80513b4b5780bbf2e07b8bf3e}{react\+\_\+forward}} ()
+\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_a928e32686c7e00c1ecde24c3da3019f7}{drive}} ()
+\begin{DoxyCompactList}\small\item\em Main drive execution of program, iterates through moves list executing next move with corresponding distance or degrees. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{custom__lab__3_8ino_afe461d27b9c48d5921c00d521181f12f}{loop}} ()
+\begin{DoxyCompactList}\small\item\em Loop execution of the program. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+double \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{left\+Encoder\+Count}} = 0
+\begin{DoxyCompactList}\small\item\em Lab specific variables. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{right\+Encoder\+Count}} = 0
+\item 
+int \mbox{\hyperlink{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}{motor\+Left\+\_\+\+P\+WM}} = 180
+\begin{DoxyCompactList}\small\item\em Default motor pwm values. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}{motor\+Right\+\_\+\+P\+WM}} = 200
+\item 
+int \mbox{\hyperlink{custom__lab__3_8ino_ab1cbaf3e6473e6a438142fc361eb59f1}{milli\+Seconds\+Per90\+Deg}} = 900
+\begin{DoxyCompactList}\small\item\em Time it takes to move 90 degrees. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desired\+Count}}
+\begin{DoxyCompactList}\small\item\em How many encoder counts for given distance. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{custom__lab__3_8ino_a7f24ac8533759a398d5fae8dd8efc3f4}{move\+List}} \mbox{[}$\,$\mbox{]} = \{\mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 300, \mbox{\hyperlink{custom__lab__3_8ino_a437ef08681e7210d6678427030446a54}{L\+E\+FT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 300, \mbox{\hyperlink{custom__lab__3_8ino_a437ef08681e7210d6678427030446a54}{L\+E\+FT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 300, \mbox{\hyperlink{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}{R\+I\+G\+HT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 900, \mbox{\hyperlink{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}{R\+I\+G\+HT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 600, \mbox{\hyperlink{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}{R\+I\+G\+HT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 300\}
+\item 
+double \mbox{\hyperlink{custom__lab__3_8ino_aefbdd7f2f15cc68d5596e640013bca04}{left\+Output}}
+\begin{DoxyCompactList}\small\item\em P\+ID values setpoints = desired counts, output = P\+WM, input = current counts. \end{DoxyCompactList}\item 
+double \mbox{\hyperlink{custom__lab__3_8ino_ae23d4c55f4605d51a1fbe2e897ee0d22}{right\+Output}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+A basic feedback controlled system for an Arduino based robot. 
+
+\begin{DoxyAuthor}{Author}
+Christian Prather 
+\end{DoxyAuthor}
+\begin{DoxyVersion}{Version}
+0.\+1 
+\end{DoxyVersion}
+\begin{DoxyDate}{Date}
+2020-\/10-\/21 
+\end{DoxyDate}
+
+
+\doxysubsection{Macro Definition Documentation}
+\mbox{\Hypertarget{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}\label{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!A@{A}}
+\index{A@{A}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{A}{A}}
+{\footnotesize\ttfamily \#define A~0}
+
+
+
+Motor control. 
+
+
+
+Definition at line 28 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}\label{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!B@{B}}
+\index{B@{B}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{B}{B}}
+{\footnotesize\ttfamily \#define B~1}
+
+
+
+Definition at line 29 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a507e70837b49afe255681d8e70a75a07}\label{custom__lab__3_8ino_a507e70837b49afe255681d8e70a75a07}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!DegreesPerRev@{DegreesPerRev}}
+\index{DegreesPerRev@{DegreesPerRev}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{DegreesPerRev}{DegreesPerRev}}
+{\footnotesize\ttfamily \#define Degrees\+Per\+Rev~27.\+0}
+
+
+
+Definition at line 41 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a45b2c321c548bc6e6590cb52e902682c}\label{custom__lab__3_8ino_a45b2c321c548bc6e6590cb52e902682c}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!dirA@{dirA}}
+\index{dirA@{dirA}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{dirA}{dirA}}
+{\footnotesize\ttfamily \#define dirA~12}
+
+
+
+Definition at line 31 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a8d5954269c70b1bf93c75c08a9d2ef6f}\label{custom__lab__3_8ino_a8d5954269c70b1bf93c75c08a9d2ef6f}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!dirB@{dirB}}
+\index{dirB@{dirB}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{dirB}{dirB}}
+{\footnotesize\ttfamily \#define dirB~13}
+
+
+
+Definition at line 33 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a55f55362145c54d91e100ea0a7da2519}\label{custom__lab__3_8ino_a55f55362145c54d91e100ea0a7da2519}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!DistancePerRev@{DistancePerRev}}
+\index{DistancePerRev@{DistancePerRev}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{DistancePerRev}{DistancePerRev}}
+{\footnotesize\ttfamily \#define Distance\+Per\+Rev~51.\+0}
+
+
+
+Definition at line 40 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_af959618707a2cab567c4b1cb2039171d}\label{custom__lab__3_8ino_af959618707a2cab567c4b1cb2039171d}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!EncoderCountsPerRev@{EncoderCountsPerRev}}
+\index{EncoderCountsPerRev@{EncoderCountsPerRev}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{EncoderCountsPerRev}{EncoderCountsPerRev}}
+{\footnotesize\ttfamily \#define Encoder\+Counts\+Per\+Rev~12.\+0}
+
+
+
+Drive constants -\/ dependent on robot configuration. 
+
+
+
+Definition at line 39 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a2e8a100362bc218f6adee79e6d7ed4c9}\label{custom__lab__3_8ino_a2e8a100362bc218f6adee79e6d7ed4c9}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!EncoderMotorLeft@{EncoderMotorLeft}}
+\index{EncoderMotorLeft@{EncoderMotorLeft}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{EncoderMotorLeft}{EncoderMotorLeft}}
+{\footnotesize\ttfamily \#define Encoder\+Motor\+Left~7}
+
+
+
+Definition at line 43 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a5ab5ad43ba2d5195c1bceec1d0a8b6e1}\label{custom__lab__3_8ino_a5ab5ad43ba2d5195c1bceec1d0a8b6e1}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!EncoderMotorRight@{EncoderMotorRight}}
+\index{EncoderMotorRight@{EncoderMotorRight}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{EncoderMotorRight}{EncoderMotorRight}}
+{\footnotesize\ttfamily \#define Encoder\+Motor\+Right~8}
+
+
+
+Definition at line 44 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}\label{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!FORWARD@{FORWARD}}
+\index{FORWARD@{FORWARD}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{FORWARD}{FORWARD}}
+{\footnotesize\ttfamily \#define F\+O\+R\+W\+A\+RD~0}
+
+
+
+Enum defines. 
+
+
+
+Definition at line 51 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_aa118db89564189dcf8c48ecbd79937d8}\label{custom__lab__3_8ino_aa118db89564189dcf8c48ecbd79937d8}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!IN1@{IN1}}
+\index{IN1@{IN1}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{IN1}{IN1}}
+{\footnotesize\ttfamily \#define I\+N1~9}
+
+
+
+Libraries for interrupts and P\+ID. 
+
+Global Defines Motor driver connections 
+
+Definition at line 22 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_ac2c663eb7de5a963911af77b65451fb6}\label{custom__lab__3_8ino_ac2c663eb7de5a963911af77b65451fb6}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!IN2@{IN2}}
+\index{IN2@{IN2}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{IN2}{IN2}}
+{\footnotesize\ttfamily \#define I\+N2~10}
+
+
+
+Definition at line 23 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_ae24e8a55f5b9660a35dc5cf8a5e8ba4a}\label{custom__lab__3_8ino_ae24e8a55f5b9660a35dc5cf8a5e8ba4a}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!IN3@{IN3}}
+\index{IN3@{IN3}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{IN3}{IN3}}
+{\footnotesize\ttfamily \#define I\+N3~5}
+
+
+
+Definition at line 24 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a38caa48612155e36696b60d2aabc25ff}\label{custom__lab__3_8ino_a38caa48612155e36696b60d2aabc25ff}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!IN4@{IN4}}
+\index{IN4@{IN4}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{IN4}{IN4}}
+{\footnotesize\ttfamily \#define I\+N4~6}
+
+
+
+Definition at line 25 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a437ef08681e7210d6678427030446a54}\label{custom__lab__3_8ino_a437ef08681e7210d6678427030446a54}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!LEFT@{LEFT}}
+\index{LEFT@{LEFT}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{LEFT}{LEFT}}
+{\footnotesize\ttfamily \#define L\+E\+FT~1}
+
+
+
+Definition at line 52 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a48cd43d2c1d009cedfc2dfd5dcc98c90}\label{custom__lab__3_8ino_a48cd43d2c1d009cedfc2dfd5dcc98c90}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!pushButton@{pushButton}}
+\index{pushButton@{pushButton}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{pushButton}{pushButton}}
+{\footnotesize\ttfamily \#define push\+Button~2}
+
+
+
+Start stop button. 
+
+
+
+Definition at line 36 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_ab0d2ef04a0c5e78d6aa2a86d16763340}\label{custom__lab__3_8ino_ab0d2ef04a0c5e78d6aa2a86d16763340}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!pwmA@{pwmA}}
+\index{pwmA@{pwmA}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{pwmA}{pwmA}}
+{\footnotesize\ttfamily \#define pwmA~3}
+
+
+
+Definition at line 30 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a5498e555e8e5b7b15c273491c1c400bc}\label{custom__lab__3_8ino_a5498e555e8e5b7b15c273491c1c400bc}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!pwmB@{pwmB}}
+\index{pwmB@{pwmB}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{pwmB}{pwmB}}
+{\footnotesize\ttfamily \#define pwmB~11}
+
+
+
+Definition at line 32 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}\label{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!RIGHT@{RIGHT}}
+\index{RIGHT@{RIGHT}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{RIGHT}{RIGHT}}
+{\footnotesize\ttfamily \#define R\+I\+G\+HT~-\/1}
+
+
+
+Definition at line 53 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{custom__lab__3_8ino_adf16701efd300d45a4f489359aee8ac6}\label{custom__lab__3_8ino_adf16701efd300d45a4f489359aee8ac6}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!adjustPWM@{adjustPWM}}
+\index{adjustPWM@{adjustPWM}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{adjustPWM()}{adjustPWM()}}
+{\footnotesize\ttfamily void adjust\+P\+WM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Run the P\+ID loop calculation and set out put to motors output in P\+WM. 
+
+
+
+Definition at line 324 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{325 \{}
+\DoxyCodeLine{326     \textcolor{comment}{// Compute the pid values}}
+\DoxyCodeLine{327     leftPID.Compute();}
+\DoxyCodeLine{328     rightPID.Compute();}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330     \textcolor{comment}{// Set the pid values within range}}
+\DoxyCodeLine{331     \mbox{\hyperlink{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}{motorLeft\_PWM}} = constrain(\mbox{\hyperlink{custom__lab__3_8ino_aefbdd7f2f15cc68d5596e640013bca04}{leftOutput}}, 150, 250);}
+\DoxyCodeLine{332     \mbox{\hyperlink{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}{motorRight\_PWM}} = constrain(\mbox{\hyperlink{custom__lab__3_8ino_ae23d4c55f4605d51a1fbe2e897ee0d22}{rightOutput}}, 150, 235);}
+\DoxyCodeLine{333     Serial.print(\textcolor{stringliteral}{"Left PWM: "});}
+\DoxyCodeLine{334     Serial.print(\mbox{\hyperlink{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}{motorLeft\_PWM}});}
+\DoxyCodeLine{335     Serial.print(\textcolor{stringliteral}{" "});}
+\DoxyCodeLine{336     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}});}
+\DoxyCodeLine{337     Serial.print(\textcolor{stringliteral}{"Right PWM: "});}
+\DoxyCodeLine{338     Serial.print(\mbox{\hyperlink{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}{motorRight\_PWM}});}
+\DoxyCodeLine{339     Serial.print(\textcolor{stringliteral}{" "});}
+\DoxyCodeLine{340     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}});}
+\DoxyCodeLine{341 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_a68dd6118a65520802b5daec8c2c98035}\label{custom__lab__3_8ino_a68dd6118a65520802b5daec8c2c98035}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!calculateDesiredCount@{calculateDesiredCount}}
+\index{calculateDesiredCount@{calculateDesiredCount}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{calculateDesiredCount()}{calculateDesiredCount()}}
+{\footnotesize\ttfamily void calculate\+Desired\+Count (\begin{DoxyParamCaption}\item[{int}]{distance }\end{DoxyParamCaption})}
+
+
+
+Calculate how many encoder counts we expect given the distance provided based on the bot intrinsics. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em distance} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 109 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{110 \{}
+\DoxyCodeLine{111     \textcolor{keywordtype}{double} revolutionsRequired = distance / \mbox{\hyperlink{custom__lab__3_8ino_a55f55362145c54d91e100ea0a7da2519}{DistancePerRev}};}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} = revolutionsRequired * \mbox{\hyperlink{custom__lab__3_8ino_af959618707a2cab567c4b1cb2039171d}{EncoderCountsPerRev}};}
+\DoxyCodeLine{114     \textcolor{comment}{// Reset encoder counts}}
+\DoxyCodeLine{115     \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}} = 0;}
+\DoxyCodeLine{116     \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}} = 0;}
+\DoxyCodeLine{117     Serial.print(\textcolor{stringliteral}{"Desired Count: "});}
+\DoxyCodeLine{118     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}});}
+\DoxyCodeLine{119 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_a7e1293d305bcaf4d458a5675d466e58c}\label{custom__lab__3_8ino_a7e1293d305bcaf4d458a5675d466e58c}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!calculateDesiredCountTurn@{calculateDesiredCountTurn}}
+\index{calculateDesiredCountTurn@{calculateDesiredCountTurn}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{calculateDesiredCountTurn()}{calculateDesiredCountTurn()}}
+{\footnotesize\ttfamily void calculate\+Desired\+Count\+Turn (\begin{DoxyParamCaption}\item[{int}]{degrees }\end{DoxyParamCaption})}
+
+
+
+Calculate how many encoder counts we expect given the degrees provided. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em degrees} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 126 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{127 \{}
+\DoxyCodeLine{128     \textcolor{keywordtype}{double} revolutionsRequired = degrees / \mbox{\hyperlink{custom__lab__3_8ino_a507e70837b49afe255681d8e70a75a07}{DegreesPerRev}};}
+\DoxyCodeLine{129     \mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} = revolutionsRequired * \mbox{\hyperlink{custom__lab__3_8ino_af959618707a2cab567c4b1cb2039171d}{EncoderCountsPerRev}};}
+\DoxyCodeLine{130     \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}} = 0;}
+\DoxyCodeLine{131     \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}} = 0;}
+\DoxyCodeLine{132     Serial.print(\textcolor{stringliteral}{"Desired Count: "});}
+\DoxyCodeLine{133     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}});}
+\DoxyCodeLine{134 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_ae369b3765489ee8bd0ea791c1843630f}\label{custom__lab__3_8ino_ae369b3765489ee8bd0ea791c1843630f}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!configure@{configure}}
+\index{configure@{configure}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{configure()}{configure()}}
+{\footnotesize\ttfamily void configure (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Function for configuration of pin states and interrupts. 
+
+
+
+Definition at line 288 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{289 \{}
+\DoxyCodeLine{290     \textcolor{comment}{// set up the motor drive ports}}
+\DoxyCodeLine{291     pinMode(\mbox{\hyperlink{custom__lab__3_8ino_ab0d2ef04a0c5e78d6aa2a86d16763340}{pwmA}}, OUTPUT);}
+\DoxyCodeLine{292     pinMode(\mbox{\hyperlink{custom__lab__3_8ino_a45b2c321c548bc6e6590cb52e902682c}{dirA}}, OUTPUT);}
+\DoxyCodeLine{293     pinMode(\mbox{\hyperlink{custom__lab__3_8ino_a5498e555e8e5b7b15c273491c1c400bc}{pwmB}}, OUTPUT);}
+\DoxyCodeLine{294     pinMode(\mbox{\hyperlink{custom__lab__3_8ino_a8d5954269c70b1bf93c75c08a9d2ef6f}{dirB}}, OUTPUT);}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296     pinMode(\mbox{\hyperlink{custom__lab__3_8ino_a48cd43d2c1d009cedfc2dfd5dcc98c90}{pushButton}}, INPUT\_PULLUP);}
+\DoxyCodeLine{297 }
+\DoxyCodeLine{298     pinMode(\mbox{\hyperlink{custom__lab__3_8ino_a2e8a100362bc218f6adee79e6d7ed4c9}{EncoderMotorLeft}}, INPUT\_PULLUP); \textcolor{comment}{//set the pin to input}}
+\DoxyCodeLine{299     PCintPort::attachInterrupt(\mbox{\hyperlink{custom__lab__3_8ino_a2e8a100362bc218f6adee79e6d7ed4c9}{EncoderMotorLeft}}, \mbox{\hyperlink{custom__lab__3_8ino_acd2d19c21a2cf76aa9b444a50501f86a}{indexLeftEncoderCount}}, CHANGE);}
+\DoxyCodeLine{300 }
+\DoxyCodeLine{301     pinMode(\mbox{\hyperlink{custom__lab__3_8ino_a5ab5ad43ba2d5195c1bceec1d0a8b6e1}{EncoderMotorRight}}, INPUT\_PULLUP); \textcolor{comment}{//set the pin to input}}
+\DoxyCodeLine{302     PCintPort::attachInterrupt(\mbox{\hyperlink{custom__lab__3_8ino_a5ab5ad43ba2d5195c1bceec1d0a8b6e1}{EncoderMotorRight}}, \mbox{\hyperlink{custom__lab__3_8ino_a405bbbc7bba20d2ba7cb629dd4b77cf7}{indexRightEncoderCount}}, CHANGE);}
+\DoxyCodeLine{303 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_a928e32686c7e00c1ecde24c3da3019f7}\label{custom__lab__3_8ino_a928e32686c7e00c1ecde24c3da3019f7}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!drive@{drive}}
+\index{drive@{drive}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{drive()}{drive()}}
+{\footnotesize\ttfamily void drive (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Main drive execution of program, iterates through moves list executing next move with corresponding distance or degrees. 
+
+
+
+Definition at line 383 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{384 \{}
+\DoxyCodeLine{385     \textcolor{comment}{// Iterate over the list jumping by two each time}}
+\DoxyCodeLine{386     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \textcolor{keyword}{sizeof}(\mbox{\hyperlink{custom__lab__3_8ino_a7f24ac8533759a398d5fae8dd8efc3f4}{moveList}}); i += 2)}
+\DoxyCodeLine{387     \{}
+\DoxyCodeLine{388         \mbox{\hyperlink{custom__lab__3_8ino_a83abbeda22fc5e6c2b35523b64199c1c}{idle}}();}
+\DoxyCodeLine{389         \textcolor{keywordflow}{switch} (\mbox{\hyperlink{custom__lab__3_8ino_a7f24ac8533759a398d5fae8dd8efc3f4}{moveList}}[i])}
+\DoxyCodeLine{390         \{}
+\DoxyCodeLine{391         \textcolor{keywordflow}{case} \mbox{\hyperlink{custom__lab__3_8ino_a437ef08681e7210d6678427030446a54}{LEFT}}:}
+\DoxyCodeLine{392             \mbox{\hyperlink{custom__lab__3_8ino_a8b7a447e91493be8a6fa88e36f19bc86}{turnLeft}}(\mbox{\hyperlink{custom__lab__3_8ino_a7f24ac8533759a398d5fae8dd8efc3f4}{moveList}}[i + 1]);}
+\DoxyCodeLine{393             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{394         \textcolor{keywordflow}{case} \mbox{\hyperlink{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}{RIGHT}}:}
+\DoxyCodeLine{395             \mbox{\hyperlink{custom__lab__3_8ino_a915894ac308e66eedd8d5402d4607fb7}{turnRight}}(\mbox{\hyperlink{custom__lab__3_8ino_a7f24ac8533759a398d5fae8dd8efc3f4}{moveList}}[i + 1]);}
+\DoxyCodeLine{396             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{397         \textcolor{keywordflow}{case} \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{FORWARD}}:}
+\DoxyCodeLine{398             \mbox{\hyperlink{custom__lab__3_8ino_a5150ca610a62064e5825467063468a60}{driveForward}}(\mbox{\hyperlink{custom__lab__3_8ino_a7f24ac8533759a398d5fae8dd8efc3f4}{moveList}}[i + 1]);}
+\DoxyCodeLine{399             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{400         \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{401             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{402         \}}
+\DoxyCodeLine{403     \}}
+\DoxyCodeLine{404 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_ab6d76e41ee823aa0312085dddf5a2063}\label{custom__lab__3_8ino_ab6d76e41ee823aa0312085dddf5a2063}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!driveBackward@{driveBackward}}
+\index{driveBackward@{driveBackward}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{driveBackward()}{driveBackward()}}
+{\footnotesize\ttfamily void drive\+Backward (\begin{DoxyParamCaption}\item[{int}]{distance }\end{DoxyParamCaption})}
+
+
+
+Drive the bot backwards. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em distance} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 253 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{254 \{}
+\DoxyCodeLine{255     \mbox{\hyperlink{custom__lab__3_8ino_ad790de8aa0c96f45129961358d0c1f57}{resetPWM}}();}
+\DoxyCodeLine{256     \mbox{\hyperlink{custom__lab__3_8ino_a68dd6118a65520802b5daec8c2c98035}{calculateDesiredCount}}(distance);}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258     \textcolor{comment}{// Loop unitl the encoders read correct}}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260     \textcolor{keywordflow}{while} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}}) > 3 || (\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}}) > 3)}
+\DoxyCodeLine{261     \{}
+\DoxyCodeLine{262         \mbox{\hyperlink{custom__lab__3_8ino_adf16701efd300d45a4f489359aee8ac6}{adjustPWM}}();}
+\DoxyCodeLine{263         \textcolor{comment}{//To drive backward, motors go in the same direction}}
+\DoxyCodeLine{264 }
+\DoxyCodeLine{265         \textcolor{keywordflow}{if} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}}) > 3)}
+\DoxyCodeLine{266         \{}
+\DoxyCodeLine{267             \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}, \mbox{\hyperlink{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}{motorLeft\_PWM}}); \textcolor{comment}{//change PWM to your calibrations}}
+\DoxyCodeLine{268         \}}
+\DoxyCodeLine{269         \textcolor{keywordflow}{if} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}}) > 3)}
+\DoxyCodeLine{270         \{}
+\DoxyCodeLine{271             \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}{B}}, \mbox{\hyperlink{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}{motorRight\_PWM}}); \textcolor{comment}{//change PWM to your calibrations}}
+\DoxyCodeLine{272         \}}
+\DoxyCodeLine{273     \}}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275     \textcolor{comment}{// motors stop}}
+\DoxyCodeLine{276     \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}, 0);}
+\DoxyCodeLine{277     \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}{B}}, 0);}
+\DoxyCodeLine{278     Serial.println(\textcolor{stringliteral}{"Done driving backwards"});}
+\DoxyCodeLine{279     Serial.print(\textcolor{stringliteral}{"L: "});}
+\DoxyCodeLine{280     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}});}
+\DoxyCodeLine{281     Serial.print(\textcolor{stringliteral}{"R: "});}
+\DoxyCodeLine{282     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}});}
+\DoxyCodeLine{283 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_a5150ca610a62064e5825467063468a60}\label{custom__lab__3_8ino_a5150ca610a62064e5825467063468a60}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!driveForward@{driveForward}}
+\index{driveForward@{driveForward}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{driveForward()}{driveForward()}}
+{\footnotesize\ttfamily void drive\+Forward (\begin{DoxyParamCaption}\item[{int}]{distance }\end{DoxyParamCaption})}
+
+
+
+Function to drive bot forward until encoders are within range. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em distance} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 215 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{216 \{}
+\DoxyCodeLine{217     Serial.println(\textcolor{stringliteral}{"Driving Forward..."});}
+\DoxyCodeLine{218     \mbox{\hyperlink{custom__lab__3_8ino_ad790de8aa0c96f45129961358d0c1f57}{resetPWM}}();}
+\DoxyCodeLine{219     \mbox{\hyperlink{custom__lab__3_8ino_a68dd6118a65520802b5daec8c2c98035}{calculateDesiredCount}}(distance);}
+\DoxyCodeLine{220 }
+\DoxyCodeLine{221     \textcolor{comment}{// Loop unitl the encoders read correct}}
+\DoxyCodeLine{222 }
+\DoxyCodeLine{223     \textcolor{keywordflow}{while} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}}) > 3 || (\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}}) > 3)}
+\DoxyCodeLine{224     \{}
+\DoxyCodeLine{225         \mbox{\hyperlink{custom__lab__3_8ino_adf16701efd300d45a4f489359aee8ac6}{adjustPWM}}();}
+\DoxyCodeLine{226         \textcolor{comment}{//To drive forward, motors go in the same direction}}
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228         \textcolor{keywordflow}{if} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}}) > 3)}
+\DoxyCodeLine{229         \{}
+\DoxyCodeLine{230             \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}, -\/\mbox{\hyperlink{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}{motorLeft\_PWM}}); \textcolor{comment}{//change PWM to your calibrations}}
+\DoxyCodeLine{231         \}}
+\DoxyCodeLine{232         \textcolor{keywordflow}{if} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}}) > 3)}
+\DoxyCodeLine{233         \{}
+\DoxyCodeLine{234             \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}{B}}, -\/\mbox{\hyperlink{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}{motorRight\_PWM}}); \textcolor{comment}{//change PWM to your calibrations}}
+\DoxyCodeLine{235         \}}
+\DoxyCodeLine{236     \}}
+\DoxyCodeLine{237 }
+\DoxyCodeLine{238     \textcolor{comment}{// motors stop}}
+\DoxyCodeLine{239     \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}, 0);}
+\DoxyCodeLine{240     \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}{B}}, 0);}
+\DoxyCodeLine{241     Serial.println(\textcolor{stringliteral}{"Done driving forward"});}
+\DoxyCodeLine{242     Serial.print(\textcolor{stringliteral}{"L: "});}
+\DoxyCodeLine{243     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}});}
+\DoxyCodeLine{244     Serial.print(\textcolor{stringliteral}{"R: "});}
+\DoxyCodeLine{245     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}});}
+\DoxyCodeLine{246 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_a83abbeda22fc5e6c2b35523b64199c1c}\label{custom__lab__3_8ino_a83abbeda22fc5e6c2b35523b64199c1c}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!idle@{idle}}
+\index{idle@{idle}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{idle()}{idle()}}
+{\footnotesize\ttfamily void idle (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Default behavior when not driving, waits for the push\+Button to be pressed so it can execute next command Blocking function. 
+
+
+
+Definition at line 310 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{311 \{}
+\DoxyCodeLine{312     Serial.println(\textcolor{stringliteral}{"Idle.."});}
+\DoxyCodeLine{313     \textcolor{keywordflow}{while} (digitalRead(\mbox{\hyperlink{custom__lab__3_8ino_a48cd43d2c1d009cedfc2dfd5dcc98c90}{pushButton}}) == 1)}
+\DoxyCodeLine{314         ; \textcolor{comment}{// wait for button push}}
+\DoxyCodeLine{315     \textcolor{keywordflow}{while} (digitalRead(\mbox{\hyperlink{custom__lab__3_8ino_a48cd43d2c1d009cedfc2dfd5dcc98c90}{pushButton}}) == 0)}
+\DoxyCodeLine{316         ; \textcolor{comment}{// wait for button release}}
+\DoxyCodeLine{317     delay(2000); \textcolor{comment}{// Give time to move hand}}
+\DoxyCodeLine{318 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_acd2d19c21a2cf76aa9b444a50501f86a}\label{custom__lab__3_8ino_acd2d19c21a2cf76aa9b444a50501f86a}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!indexLeftEncoderCount@{indexLeftEncoderCount}}
+\index{indexLeftEncoderCount@{indexLeftEncoderCount}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{indexLeftEncoderCount()}{indexLeftEncoderCount()}}
+{\footnotesize\ttfamily void index\+Left\+Encoder\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+I\+SR for left encoder. 
+
+
+
+Definition at line 88 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{89 \{}
+\DoxyCodeLine{90     \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}}++;}
+\DoxyCodeLine{91     \textcolor{comment}{//Serial.println("Left Encoder ++");}}
+\DoxyCodeLine{92 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_a405bbbc7bba20d2ba7cb629dd4b77cf7}\label{custom__lab__3_8ino_a405bbbc7bba20d2ba7cb629dd4b77cf7}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!indexRightEncoderCount@{indexRightEncoderCount}}
+\index{indexRightEncoderCount@{indexRightEncoderCount}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{indexRightEncoderCount()}{indexRightEncoderCount()}}
+{\footnotesize\ttfamily void index\+Right\+Encoder\+Count (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+I\+SR for incrementing right encoder. 
+
+
+
+Definition at line 97 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{98 \{}
+\DoxyCodeLine{99     \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}}++;}
+\DoxyCodeLine{100     \textcolor{comment}{//Serial.println("Right Encoder ++");}}
+\DoxyCodeLine{101 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_afe461d27b9c48d5921c00d521181f12f}\label{custom__lab__3_8ino_afe461d27b9c48d5921c00d521181f12f}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!loop@{loop}}
+\index{loop@{loop}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{loop()}{loop()}}
+{\footnotesize\ttfamily void loop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Loop execution of the program. 
+
+
+
+Definition at line 409 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{410 \{}
+\DoxyCodeLine{411     \mbox{\hyperlink{custom__lab__3_8ino_a928e32686c7e00c1ecde24c3da3019f7}{drive}}();}
+\DoxyCodeLine{412 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_ae1e8b0b80513b4b5780bbf2e07b8bf3e}\label{custom__lab__3_8ino_ae1e8b0b80513b4b5780bbf2e07b8bf3e}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!react\_forward@{react\_forward}}
+\index{react\_forward@{react\_forward}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{react\_forward()}{react\_forward()}}
+{\footnotesize\ttfamily void react\+\_\+forward (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 373 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{374 \{}
+\DoxyCodeLine{375     \textcolor{comment}{// TODO: Check which button was hit}}
+\DoxyCodeLine{376     \mbox{\hyperlink{custom__lab__3_8ino_ab6d76e41ee823aa0312085dddf5a2063}{driveBackward}}(50);}
+\DoxyCodeLine{377 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_afeb4f1c2c988579e1d753f4eb5bd2f92}\label{custom__lab__3_8ino_afeb4f1c2c988579e1d753f4eb5bd2f92}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!react\_left@{react\_left}}
+\index{react\_left@{react\_left}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{react\_left()}{react\_left()}}
+{\footnotesize\ttfamily void react\+\_\+left (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This is the logic to execute if we hit a push button ideally this is never executed as we shoudl never actually hit the walls. 
+
+
+
+Definition at line 359 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{360 \{}
+\DoxyCodeLine{361     \textcolor{comment}{// TODO: Check which button was hit}}
+\DoxyCodeLine{362 }
+\DoxyCodeLine{363     \mbox{\hyperlink{custom__lab__3_8ino_ab6d76e41ee823aa0312085dddf5a2063}{driveBackward}}(20);}
+\DoxyCodeLine{364     \mbox{\hyperlink{custom__lab__3_8ino_a915894ac308e66eedd8d5402d4607fb7}{turnRight}}(30);}
+\DoxyCodeLine{365 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_ab14be4b6a0be263a85203cd29d029f26}\label{custom__lab__3_8ino_ab14be4b6a0be263a85203cd29d029f26}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!react\_right@{react\_right}}
+\index{react\_right@{react\_right}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{react\_right()}{react\_right()}}
+{\footnotesize\ttfamily void react\+\_\+right (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 366 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{367 \{}
+\DoxyCodeLine{368     \textcolor{comment}{// TODO: Check which button was hit}}
+\DoxyCodeLine{369 }
+\DoxyCodeLine{370     \mbox{\hyperlink{custom__lab__3_8ino_ab6d76e41ee823aa0312085dddf5a2063}{driveBackward}}(20);}
+\DoxyCodeLine{371     \mbox{\hyperlink{custom__lab__3_8ino_a8b7a447e91493be8a6fa88e36f19bc86}{turnLeft}}(30);}
+\DoxyCodeLine{372 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_ad790de8aa0c96f45129961358d0c1f57}\label{custom__lab__3_8ino_ad790de8aa0c96f45129961358d0c1f57}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!resetPWM@{resetPWM}}
+\index{resetPWM@{resetPWM}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{resetPWM()}{resetPWM()}}
+{\footnotesize\ttfamily void reset\+P\+WM (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Helper function for setting the P\+WM back to default value. 
+
+
+
+Definition at line 79 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{80 \{}
+\DoxyCodeLine{81     \mbox{\hyperlink{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}{motorLeft\_PWM}} = 180;}
+\DoxyCodeLine{82     \mbox{\hyperlink{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}{motorRight\_PWM}} = 200;}
+\DoxyCodeLine{83 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_a4fc01d736fe50cf5b977f755b675f11d}\label{custom__lab__3_8ino_a4fc01d736fe50cf5b977f755b675f11d}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!setup@{setup}}
+\index{setup@{setup}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{setup()}{setup()}}
+{\footnotesize\ttfamily void setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Entry point of program handles serial setup and P\+ID config. 
+
+
+
+Definition at line 346 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{347 \{}
+\DoxyCodeLine{348     Serial.begin(9600);}
+\DoxyCodeLine{349     Serial.println(\textcolor{stringliteral}{"Setting up....."});}
+\DoxyCodeLine{350     \mbox{\hyperlink{custom__lab__3_8ino_ae369b3765489ee8bd0ea791c1843630f}{configure}}();}
+\DoxyCodeLine{351     leftPID.SetMode(AUTOMATIC);}
+\DoxyCodeLine{352     rightPID.SetMode(AUTOMATIC);}
+\DoxyCodeLine{353 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_a8b7a447e91493be8a6fa88e36f19bc86}\label{custom__lab__3_8ino_a8b7a447e91493be8a6fa88e36f19bc86}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!turnLeft@{turnLeft}}
+\index{turnLeft@{turnLeft}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{turnLeft()}{turnLeft()}}
+{\footnotesize\ttfamily void turn\+Left (\begin{DoxyParamCaption}\item[{int}]{degrees }\end{DoxyParamCaption})}
+
+
+
+Turn bot right to given degrees. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em degrees} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 178 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{179 \{}
+\DoxyCodeLine{180     \mbox{\hyperlink{custom__lab__3_8ino_ad790de8aa0c96f45129961358d0c1f57}{resetPWM}}();}
+\DoxyCodeLine{181     \mbox{\hyperlink{custom__lab__3_8ino_a7e1293d305bcaf4d458a5675d466e58c}{calculateDesiredCountTurn}}(degrees);}
+\DoxyCodeLine{182 }
+\DoxyCodeLine{183     \textcolor{comment}{// Loop unitl the encoders read correct}}
+\DoxyCodeLine{184 }
+\DoxyCodeLine{185     \textcolor{keywordflow}{while} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}}) > 3)}
+\DoxyCodeLine{186     \{}
+\DoxyCodeLine{187         \mbox{\hyperlink{custom__lab__3_8ino_adf16701efd300d45a4f489359aee8ac6}{adjustPWM}}();}
+\DoxyCodeLine{188         \textcolor{comment}{//To drive forward, motors go in the same direction}}
+\DoxyCodeLine{189 }
+\DoxyCodeLine{190         \textcolor{keywordflow}{if} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}}) > 3)}
+\DoxyCodeLine{191         \{}
+\DoxyCodeLine{192             \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}, \mbox{\hyperlink{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}{motorLeft\_PWM}}); \textcolor{comment}{//change PWM to your calibrations}}
+\DoxyCodeLine{193         \}}
+\DoxyCodeLine{194         \textcolor{keywordflow}{if} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}}) > 3)}
+\DoxyCodeLine{195         \{}
+\DoxyCodeLine{196             \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}{B}}, -\/\mbox{\hyperlink{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}{motorRight\_PWM}}); \textcolor{comment}{//change PWM to your calibrations}}
+\DoxyCodeLine{197         \}}
+\DoxyCodeLine{198     \}}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200     \textcolor{comment}{// motors stop}}
+\DoxyCodeLine{201     \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}, 0);}
+\DoxyCodeLine{202     \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}{B}}, 0);}
+\DoxyCodeLine{203     Serial.println(\textcolor{stringliteral}{"Done driving Left"});}
+\DoxyCodeLine{204     Serial.print(\textcolor{stringliteral}{"L: "});}
+\DoxyCodeLine{205     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}});}
+\DoxyCodeLine{206     Serial.print(\textcolor{stringliteral}{"R: "});}
+\DoxyCodeLine{207     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}});}
+\DoxyCodeLine{208 \}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{custom__lab__3_8ino_a915894ac308e66eedd8d5402d4607fb7}\label{custom__lab__3_8ino_a915894ac308e66eedd8d5402d4607fb7}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!turnRight@{turnRight}}
+\index{turnRight@{turnRight}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{turnRight()}{turnRight()}}
+{\footnotesize\ttfamily void turn\+Right (\begin{DoxyParamCaption}\item[{int}]{degrees }\end{DoxyParamCaption})}
+
+
+
+Turn bot to given degrees. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em degrees} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line 141 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{142 \{}
+\DoxyCodeLine{143     \mbox{\hyperlink{custom__lab__3_8ino_ad790de8aa0c96f45129961358d0c1f57}{resetPWM}}(); \textcolor{comment}{// Reset pwm}}
+\DoxyCodeLine{144     \mbox{\hyperlink{custom__lab__3_8ino_a7e1293d305bcaf4d458a5675d466e58c}{calculateDesiredCountTurn}}(degrees);}
+\DoxyCodeLine{145     \textcolor{comment}{// While the encoders are not correct adjust PWM with PID loop}}
+\DoxyCodeLine{146     \textcolor{comment}{// Loop unitl the encoders read correct}}
+\DoxyCodeLine{147 }
+\DoxyCodeLine{148     \textcolor{keywordflow}{while} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}}) > 3)}
+\DoxyCodeLine{149     \{}
+\DoxyCodeLine{150         \mbox{\hyperlink{custom__lab__3_8ino_adf16701efd300d45a4f489359aee8ac6}{adjustPWM}}();}
+\DoxyCodeLine{151         \textcolor{comment}{//To drive forward, motors go in the same direction}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153         \textcolor{keywordflow}{if} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}}) > 3)}
+\DoxyCodeLine{154         \{}
+\DoxyCodeLine{155             \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}, -\/\mbox{\hyperlink{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}{motorLeft\_PWM}}); \textcolor{comment}{//change PWM to your calibrations}}
+\DoxyCodeLine{156         \}}
+\DoxyCodeLine{157         \textcolor{keywordflow}{if} ((\mbox{\hyperlink{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}{desiredCount}} -\/ \mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}}) > 3)}
+\DoxyCodeLine{158         \{}
+\DoxyCodeLine{159             \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}{B}}, \mbox{\hyperlink{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}{motorRight\_PWM}}); \textcolor{comment}{//change PWM to your calibrations}}
+\DoxyCodeLine{160         \}}
+\DoxyCodeLine{161     \}}
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     \textcolor{comment}{// motors stop}}
+\DoxyCodeLine{164     \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}, 0);}
+\DoxyCodeLine{165     \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\_motor}}(\mbox{\hyperlink{custom__lab__3_8ino_a111da81ae5883147168bbb8366377b10}{B}}, 0);}
+\DoxyCodeLine{166     Serial.println(\textcolor{stringliteral}{"Done driving Right"});}
+\DoxyCodeLine{167     Serial.print(\textcolor{stringliteral}{"L: "});}
+\DoxyCodeLine{168     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}{leftEncoderCount}});}
+\DoxyCodeLine{169     Serial.print(\textcolor{stringliteral}{"R: "});}
+\DoxyCodeLine{170     Serial.println(\mbox{\hyperlink{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}{rightEncoderCount}});}
+\DoxyCodeLine{171 \}}
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}\label{custom__lab__3_8ino_a625be316f9071f1739b2bb63869c0a66}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!desiredCount@{desiredCount}}
+\index{desiredCount@{desiredCount}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{desiredCount}{desiredCount}}
+{\footnotesize\ttfamily double desired\+Count}
+
+
+
+How many encoder counts for given distance. 
+
+
+
+Definition at line 63 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}\label{custom__lab__3_8ino_a7ee1445c93380d308baf7364953d8e50}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!leftEncoderCount@{leftEncoderCount}}
+\index{leftEncoderCount@{leftEncoderCount}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{leftEncoderCount}{leftEncoderCount}}
+{\footnotesize\ttfamily P\+ID left\+P\+ID \& left\+Encoder\+Count = 0}
+
+
+
+Lab specific variables. 
+
+
+
+Definition at line 47 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_aefbdd7f2f15cc68d5596e640013bca04}\label{custom__lab__3_8ino_aefbdd7f2f15cc68d5596e640013bca04}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!leftOutput@{leftOutput}}
+\index{leftOutput@{leftOutput}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{leftOutput}{leftOutput}}
+{\footnotesize\ttfamily double left\+Output}
+
+
+
+P\+ID values setpoints = desired counts, output = P\+WM, input = current counts. 
+
+
+
+Definition at line 72 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_ab1cbaf3e6473e6a438142fc361eb59f1}\label{custom__lab__3_8ino_ab1cbaf3e6473e6a438142fc361eb59f1}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!milliSecondsPer90Deg@{milliSecondsPer90Deg}}
+\index{milliSecondsPer90Deg@{milliSecondsPer90Deg}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{milliSecondsPer90Deg}{milliSecondsPer90Deg}}
+{\footnotesize\ttfamily int milli\+Seconds\+Per90\+Deg = 900}
+
+
+
+Time it takes to move 90 degrees. 
+
+
+
+Definition at line 60 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}\label{custom__lab__3_8ino_acd882c1d0c3daada995e2e577283cac8}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!motorLeft\_PWM@{motorLeft\_PWM}}
+\index{motorLeft\_PWM@{motorLeft\_PWM}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{motorLeft\_PWM}{motorLeft\_PWM}}
+{\footnotesize\ttfamily int motor\+Left\+\_\+\+P\+WM = 180}
+
+
+
+Default motor pwm values. 
+
+
+
+Definition at line 56 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}\label{custom__lab__3_8ino_ac96a126bb0df1f2ad5d05484d26b8dfa}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!motorRight\_PWM@{motorRight\_PWM}}
+\index{motorRight\_PWM@{motorRight\_PWM}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{motorRight\_PWM}{motorRight\_PWM}}
+{\footnotesize\ttfamily int motor\+Right\+\_\+\+P\+WM = 200}
+
+
+
+Definition at line 57 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_a7f24ac8533759a398d5fae8dd8efc3f4}\label{custom__lab__3_8ino_a7f24ac8533759a398d5fae8dd8efc3f4}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!moveList@{moveList}}
+\index{moveList@{moveList}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{moveList}{moveList}}
+{\footnotesize\ttfamily int move\+List\mbox{[}$\,$\mbox{]} = \{\mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 300, \mbox{\hyperlink{custom__lab__3_8ino_a437ef08681e7210d6678427030446a54}{L\+E\+FT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 300, \mbox{\hyperlink{custom__lab__3_8ino_a437ef08681e7210d6678427030446a54}{L\+E\+FT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 300, \mbox{\hyperlink{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}{R\+I\+G\+HT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 900, \mbox{\hyperlink{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}{R\+I\+G\+HT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 600, \mbox{\hyperlink{custom__lab__3_8ino_a80fb826a684cf3f0d306b22aa100ddac}{R\+I\+G\+HT}}, 90, \mbox{\hyperlink{custom__lab__3_8ino_a6ddfdda7a062d10cff4a72b76b44aeb8}{F\+O\+R\+W\+A\+RD}}, 300\}}
+
+
+
+Definition at line 66 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}\label{custom__lab__3_8ino_af512b4116938ac363904936f86acf27f}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!rightEncoderCount@{rightEncoderCount}}
+\index{rightEncoderCount@{rightEncoderCount}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{rightEncoderCount}{rightEncoderCount}}
+{\footnotesize\ttfamily P\+ID right\+P\+ID \& right\+Encoder\+Count = 0}
+
+
+
+Definition at line 48 of file custom\+\_\+lab\+\_\+3.\+ino.
+
+\mbox{\Hypertarget{custom__lab__3_8ino_ae23d4c55f4605d51a1fbe2e897ee0d22}\label{custom__lab__3_8ino_ae23d4c55f4605d51a1fbe2e897ee0d22}} 
+\index{custom\_lab\_3.ino@{custom\_lab\_3.ino}!rightOutput@{rightOutput}}
+\index{rightOutput@{rightOutput}!custom\_lab\_3.ino@{custom\_lab\_3.ino}}
+\doxysubsubsection{\texorpdfstring{rightOutput}{rightOutput}}
+{\footnotesize\ttfamily double right\+Output}
+
+
+
+Definition at line 72 of file custom\+\_\+lab\+\_\+3.\+ino.
+

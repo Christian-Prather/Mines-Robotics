@@ -1,0 +1,188 @@
+\begin{theindex}
+
+  \item {A}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{7}
+  \item {adjustPWM}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{11}
+
+  \indexspace
+
+  \item {B}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{7}
+
+  \indexspace
+
+  \item {calculateDesiredCount}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{11}
+  \item {calculateDesiredCountTurn}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{12}
+  \item {configure}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{12}
+  \item {custom\_lab\_3.ino}
+    \subitem {A}, \hyperpage{7}
+    \subitem {adjustPWM}, \hyperpage{11}
+    \subitem {B}, \hyperpage{7}
+    \subitem {calculateDesiredCount}, \hyperpage{11}
+    \subitem {calculateDesiredCountTurn}, \hyperpage{12}
+    \subitem {configure}, \hyperpage{12}
+    \subitem {DegreesPerRev}, \hyperpage{8}
+    \subitem {desiredCount}, \hyperpage{19}
+    \subitem {dirA}, \hyperpage{8}
+    \subitem {dirB}, \hyperpage{8}
+    \subitem {DistancePerRev}, \hyperpage{8}
+    \subitem {drive}, \hyperpage{12}
+    \subitem {driveBackward}, \hyperpage{13}
+    \subitem {driveForward}, \hyperpage{13}
+    \subitem {EncoderCountsPerRev}, \hyperpage{8}
+    \subitem {EncoderMotorLeft}, \hyperpage{8}
+    \subitem {EncoderMotorRight}, \hyperpage{9}
+    \subitem {FORWARD}, \hyperpage{9}
+    \subitem {idle}, \hyperpage{15}
+    \subitem {IN1}, \hyperpage{9}
+    \subitem {IN2}, \hyperpage{9}
+    \subitem {IN3}, \hyperpage{9}
+    \subitem {IN4}, \hyperpage{10}
+    \subitem {indexLeftEncoderCount}, \hyperpage{15}
+    \subitem {indexRightEncoderCount}, \hyperpage{15}
+    \subitem {LEFT}, \hyperpage{10}
+    \subitem {leftEncoderCount}, \hyperpage{19}
+    \subitem {leftOutput}, \hyperpage{19}
+    \subitem {loop}, \hyperpage{16}
+    \subitem {milliSecondsPer90Deg}, \hyperpage{19}
+    \subitem {motorLeft\_PWM}, \hyperpage{19}
+    \subitem {motorRight\_PWM}, \hyperpage{19}
+    \subitem {moveList}, \hyperpage{20}
+    \subitem {pushButton}, \hyperpage{10}
+    \subitem {pwmA}, \hyperpage{10}
+    \subitem {pwmB}, \hyperpage{10}
+    \subitem {react\_forward}, \hyperpage{16}
+    \subitem {react\_left}, \hyperpage{16}
+    \subitem {react\_right}, \hyperpage{16}
+    \subitem {resetPWM}, \hyperpage{17}
+    \subitem {RIGHT}, \hyperpage{10}
+    \subitem {rightEncoderCount}, \hyperpage{20}
+    \subitem {rightOutput}, \hyperpage{20}
+    \subitem {setup}, \hyperpage{17}
+    \subitem {turnLeft}, \hyperpage{17}
+    \subitem {turnRight}, \hyperpage{18}
+  \item {custom\_lab\_3/custom\_lab\_3.ino}, \hyperpage{5}
+  \item {custom\_lab\_3/motors.ino}, \hyperpage{20}
+
+  \indexspace
+
+  \item {DegreesPerRev}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{8}
+  \item {desiredCount}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{19}
+  \item {dirA}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{8}
+  \item {dirB}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{8}
+  \item {DistancePerRev}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{8}
+  \item {drive}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{12}
+  \item {driveBackward}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{13}
+  \item {driveForward}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{13}
+
+  \indexspace
+
+  \item {EncoderCountsPerRev}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{8}
+  \item {EncoderMotorLeft}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{8}
+  \item {EncoderMotorRight}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{9}
+
+  \indexspace
+
+  \item {FORWARD}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{9}
+
+  \indexspace
+
+  \item {idle}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{15}
+  \item {IN1}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{9}
+  \item {IN2}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{9}
+  \item {IN3}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{9}
+  \item {IN4}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{10}
+  \item {indexLeftEncoderCount}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{15}
+  \item {indexRightEncoderCount}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{15}
+
+  \indexspace
+
+  \item {LEFT}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{10}
+  \item {leftEncoderCount}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{19}
+  \item {leftOutput}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{19}
+  \item {loop}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{16}
+
+  \indexspace
+
+  \item {milliSecondsPer90Deg}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{19}
+  \item {motor\_setup}
+    \subitem {motors.ino}, \hyperpage{20}
+  \item {motorLeft\_PWM}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{19}
+  \item {motorRight\_PWM}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{19}
+  \item {motors.ino}
+    \subitem {motor\_setup}, \hyperpage{20}
+    \subitem {run\_motor}, \hyperpage{21}
+  \item {moveList}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{20}
+
+  \indexspace
+
+  \item {pushButton}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{10}
+  \item {pwmA}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{10}
+  \item {pwmB}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{10}
+
+  \indexspace
+
+  \item {react\_forward}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{16}
+  \item {react\_left}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{16}
+  \item {react\_right}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{16}
+  \item {resetPWM}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{17}
+  \item {RIGHT}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{10}
+  \item {rightEncoderCount}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{20}
+  \item {rightOutput}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{20}
+  \item {run\_motor}
+    \subitem {motors.ino}, \hyperpage{21}
+
+  \indexspace
+
+  \item {setup}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{17}
+
+  \indexspace
+
+  \item {turnLeft}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{17}
+  \item {turnRight}
+    \subitem {custom\_lab\_3.ino}, \hyperpage{18}
+
+\end{theindex}
