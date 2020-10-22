@@ -58,13 +58,13 @@ int milliSecondsPer90Deg = 900;
 double desiredCount;
 
 // Global array for tracking move order (move, distance) or (move, degree)
-int moveList[] = {FORWARD, 300, LEFT, 90};
+int moveList[] = {FORWARD, 300, LEFT, 90, FORWARD, 300, LEFT, 90, FORWARD, 300, RIGHT, 90, FORWARD, 900, RIGHT, 90, FORWARD, 600, RIGHT, 90, FORWARD, 300};
 
 /**
    @brief PID values
    setpoints = desired counts, output = PWM, input = current counts
 */
-double leftSetpoint, leftOutput, rightSetpoint, rightOutput;
+double leftOutput, rightOutput;
 PID leftPID(&leftEncoderCount, &leftOutput, &desiredCount, 2, 5, 2, DIRECT);
 PID rightPID(&rightEncoderCount, &rightOutput, &desiredCount, 2, 5, 2, DIRECT);
 
@@ -73,8 +73,8 @@ PID rightPID(&rightEncoderCount, &rightOutput, &desiredCount, 2, 5, 2, DIRECT);
 */
 void resetPWM()
 {
-  motorLeft_PWM = 180;
-  motorRight_PWM = 200;
+    motorLeft_PWM = 180;
+    motorRight_PWM = 200;
 }
 
 /**
@@ -82,8 +82,8 @@ void resetPWM()
 */
 void indexLeftEncoderCount()
 {
-  leftEncoderCount++;
-  //Serial.println("Left Encoder ++");
+    leftEncoderCount++;
+    //Serial.println("Left Encoder ++");
 }
 
 /**
@@ -91,8 +91,41 @@ void indexLeftEncoderCount()
 */
 void indexRightEncoderCount()
 {
-  rightEncoderCount++;
-  //Serial.println("Right Encoder ++");
+    rightEncoderCount++;
+    //Serial.println("Right Encoder ++");
+}
+
+/**
+   @brief Calculate how many encoder counts we expect given the distance provided
+   based on the bot intrinsics
+
+   @param distance
+*/
+void calculateDesiredCount(int distance)
+{
+    double revolutionsRequired = distance / DistancePerRev;
+
+    desiredCount = revolutionsRequired * EncoderCountsPerRev;
+    // Reset encoder counts
+    leftEncoderCount = 0;
+    rightEncoderCount = 0;
+    Serial.print("Desired Count: ");
+    Serial.println(desiredCount);
+}
+
+/**
+ * @brief Calculate how many encoder counts we expect given the degrees provided
+ * 
+ * @param degrees 
+ */
+void calculateDesiredCountTurn(int degrees)
+{
+    double revolutionsRequired = degrees / DegreesPerRev;
+    desiredCount = revolutionsRequired * EncoderCountsPerRev;
+    leftEncoderCount = 0;
+    rightEncoderCount = 0;
+    Serial.print("Desired Count: ");
+    Serial.println(desiredCount);
 }
 
 /**
@@ -102,36 +135,34 @@ void indexRightEncoderCount()
 */
 void turnRight(int degrees)
 {
-  resetPWM(); // Reset pwm
-  calculateDesiredCountTurn(degrees);
-  // While the encoders are not correct adjust PWM with PID loop
-  leftSetpoint = desiredCount;
-  rightSetpoint = desiredCount;
-  // Loop unitl the encoders read correct
+    resetPWM(); // Reset pwm
+    calculateDesiredCountTurn(degrees);
+    // While the encoders are not correct adjust PWM with PID loop
+    // Loop unitl the encoders read correct
 
-  while ((desiredCount - rightEncoderCount) > 3)
-  {
-    adjustPWM();
-    //To drive forward, motors go in the same direction
-
-    if ((desiredCount - leftEncoderCount) > 3)
+    while ((desiredCount - rightEncoderCount) > 3)
     {
-      run_motor(A, -motorLeft_PWM); //change PWM to your calibrations
-    }
-    if ((desiredCount - rightEncoderCount) > 3)
-    {
-      run_motor(B, motorRight_PWM); //change PWM to your calibrations
-    }
-  }
+        adjustPWM();
+        //To drive forward, motors go in the same direction
 
-  // motors stop
-  run_motor(A, 0);
-  run_motor(B, 0);
-  Serial.println("Done driving Right");
-  Serial.print("L: ");
-  Serial.println(leftEncoderCount);
-  Serial.print("R: ");
-  Serial.println(rightEncoderCount);
+        if ((desiredCount - leftEncoderCount) > 3)
+        {
+            run_motor(A, -motorLeft_PWM); //change PWM to your calibrations
+        }
+        if ((desiredCount - rightEncoderCount) > 3)
+        {
+            run_motor(B, motorRight_PWM); //change PWM to your calibrations
+        }
+    }
+
+    // motors stop
+    run_motor(A, 0);
+    run_motor(B, 0);
+    Serial.println("Done driving Right");
+    Serial.print("L: ");
+    Serial.println(leftEncoderCount);
+    Serial.print("R: ");
+    Serial.println(rightEncoderCount);
 }
 
 /**
@@ -141,67 +172,34 @@ void turnRight(int degrees)
 */
 void turnLeft(int degrees)
 {
-  resetPWM();
-  calculateDesiredCountTurn(degrees);
+    resetPWM();
+    calculateDesiredCountTurn(degrees);
 
-  leftSetpoint = desiredCount;
-  rightSetpoint = desiredCount;
-  // Loop unitl the encoders read correct
+    // Loop unitl the encoders read correct
 
-  while ((desiredCount - leftEncoderCount) > 3)
-  {
-    adjustPWM();
-    //To drive forward, motors go in the same direction
-
-    if ((desiredCount - leftEncoderCount) > 3)
+    while ((desiredCount - leftEncoderCount) > 3)
     {
-      run_motor(A, motorLeft_PWM); //change PWM to your calibrations
+        adjustPWM();
+        //To drive forward, motors go in the same direction
+
+        if ((desiredCount - leftEncoderCount) > 3)
+        {
+            run_motor(A, motorLeft_PWM); //change PWM to your calibrations
+        }
+        if ((desiredCount - rightEncoderCount) > 3)
+        {
+            run_motor(B, -motorRight_PWM); //change PWM to your calibrations
+        }
     }
-    if ((desiredCount - rightEncoderCount) > 3)
-    {
-      run_motor(B, -motorRight_PWM); //change PWM to your calibrations
-    }
-  }
 
-  // motors stop
-  run_motor(A, 0);
-  run_motor(B, 0);
-  Serial.println("Done driving Left");
-  Serial.print("L: ");
-  Serial.println(leftEncoderCount);
-  Serial.print("R: ");
-  Serial.println(rightEncoderCount);
-}
-
-/**
-   @brief Calculate how many encoder counts we expect given the  distance provided
-   based on the bot intrinsics
-
-   @param distance
-*/
-void calculateDesiredCount(int distance)
-{
-  double revolutionsRequired = distance / DistancePerRev;
-
-  // TODO: Need to add a buffer here or will never exit this loop
-  desiredCount = revolutionsRequired * EncoderCountsPerRev;
-  // Reset encoder counts
-  leftEncoderCount = 0;
-  rightEncoderCount = 0;
-  Serial.print("Desired Count: ");
-  Serial.println(desiredCount);
-}
-
-void calculateDesiredCountTurn(int degrees)
-{
-  //Time to keep motors on
-  // unsigned long t = (abs(degrees) / 90) * milliSecondsPer90Deg;
-  double revolutionsRequired = degrees / DegreesPerRev;
-  desiredCount = revolutionsRequired * EncoderCountsPerRev;
-  leftEncoderCount = 0;
-  rightEncoderCount = 0;
-  Serial.print("Desired Count: ");
-  Serial.println(desiredCount);
+    // motors stop
+    run_motor(A, 0);
+    run_motor(B, 0);
+    Serial.println("Done driving Left");
+    Serial.print("L: ");
+    Serial.println(leftEncoderCount);
+    Serial.print("R: ");
+    Serial.println(rightEncoderCount);
 }
 
 /**
@@ -211,37 +209,35 @@ void calculateDesiredCountTurn(int degrees)
 */
 void driveForward(int distance)
 {
-  Serial.println("Driving Forward...");
-  resetPWM();
-  calculateDesiredCount(distance);
+    Serial.println("Driving Forward...");
+    resetPWM();
+    calculateDesiredCount(distance);
 
-  leftSetpoint = desiredCount;
-  rightSetpoint = desiredCount;
-  // Loop unitl the encoders read correct
+    // Loop unitl the encoders read correct
 
-  while ((desiredCount - leftEncoderCount) > 3 || (desiredCount - rightEncoderCount) > 3)
-  {
-    adjustPWM();
-    //To drive forward, motors go in the same direction
-
-    if ((desiredCount - leftEncoderCount) > 3)
+    while ((desiredCount - leftEncoderCount) > 3 || (desiredCount - rightEncoderCount) > 3)
     {
-      run_motor(A, -motorLeft_PWM); //change PWM to your calibrations
-    }
-    if ((desiredCount - rightEncoderCount) > 3)
-    {
-      run_motor(B, -motorRight_PWM); //change PWM to your calibrations
-    }
-  }
+        adjustPWM();
+        //To drive forward, motors go in the same direction
 
-  // motors stop
-  run_motor(A, 0);
-  run_motor(B, 0);
-  Serial.println("Done driving forward");
-  Serial.print("L: ");
-  Serial.println(leftEncoderCount);
-  Serial.print("R: ");
-  Serial.println(rightEncoderCount);
+        if ((desiredCount - leftEncoderCount) > 3)
+        {
+            run_motor(A, -motorLeft_PWM); //change PWM to your calibrations
+        }
+        if ((desiredCount - rightEncoderCount) > 3)
+        {
+            run_motor(B, -motorRight_PWM); //change PWM to your calibrations
+        }
+    }
+
+    // motors stop
+    run_motor(A, 0);
+    run_motor(B, 0);
+    Serial.println("Done driving forward");
+    Serial.print("L: ");
+    Serial.println(leftEncoderCount);
+    Serial.print("R: ");
+    Serial.println(rightEncoderCount);
 }
 
 /**
@@ -251,36 +247,34 @@ void driveForward(int distance)
 */
 void driveBackward(int distance)
 {
-  resetPWM();
-  calculateDesiredCount(distance);
+    resetPWM();
+    calculateDesiredCount(distance);
 
-  leftSetpoint = desiredCount;
-  rightSetpoint = desiredCount;
-  // Loop unitl the encoders read correct
+    // Loop unitl the encoders read correct
 
-  while ((desiredCount - leftEncoderCount) > 3 || (desiredCount - rightEncoderCount) > 3)
-  {
-    adjustPWM();
-    //To drive backward, motors go in the same direction
-
-    if ((desiredCount - leftEncoderCount) > 3)
+    while ((desiredCount - leftEncoderCount) > 3 || (desiredCount - rightEncoderCount) > 3)
     {
-      run_motor(A, motorLeft_PWM); //change PWM to your calibrations
-    }
-    if ((desiredCount - rightEncoderCount) > 3)
-    {
-      run_motor(B, motorRight_PWM); //change PWM to your calibrations
-    }
-  }
+        adjustPWM();
+        //To drive backward, motors go in the same direction
 
-  // motors stop
-  run_motor(A, 0);
-  run_motor(B, 0);
-  Serial.println("Done driving backwards");
-  Serial.print("L: ");
-  Serial.println(leftEncoderCount);
-  Serial.print("R: ");
-  Serial.println(rightEncoderCount);
+        if ((desiredCount - leftEncoderCount) > 3)
+        {
+            run_motor(A, motorLeft_PWM); //change PWM to your calibrations
+        }
+        if ((desiredCount - rightEncoderCount) > 3)
+        {
+            run_motor(B, motorRight_PWM); //change PWM to your calibrations
+        }
+    }
+
+    // motors stop
+    run_motor(A, 0);
+    run_motor(B, 0);
+    Serial.println("Done driving backwards");
+    Serial.print("L: ");
+    Serial.println(leftEncoderCount);
+    Serial.print("R: ");
+    Serial.println(rightEncoderCount);
 }
 
 /**
@@ -288,19 +282,19 @@ void driveBackward(int distance)
 */
 void configure()
 {
-  // set up the motor drive ports
-  pinMode(pwmA, OUTPUT);
-  pinMode(dirA, OUTPUT);
-  pinMode(pwmB, OUTPUT);
-  pinMode(dirB, OUTPUT);
+    // set up the motor drive ports
+    pinMode(pwmA, OUTPUT);
+    pinMode(dirA, OUTPUT);
+    pinMode(pwmB, OUTPUT);
+    pinMode(dirB, OUTPUT);
 
-  pinMode(pushButton, INPUT_PULLUP);
+    pinMode(pushButton, INPUT_PULLUP);
 
-  pinMode(EncoderMotorLeft, INPUT_PULLUP); //set the pin to input
-  PCintPort::attachInterrupt(EncoderMotorLeft, indexLeftEncoderCount, CHANGE);
+    pinMode(EncoderMotorLeft, INPUT_PULLUP); //set the pin to input
+    PCintPort::attachInterrupt(EncoderMotorLeft, indexLeftEncoderCount, CHANGE);
 
-  pinMode(EncoderMotorRight, INPUT_PULLUP); //set the pin to input
-  PCintPort::attachInterrupt(EncoderMotorRight, indexRightEncoderCount, CHANGE);
+    pinMode(EncoderMotorRight, INPUT_PULLUP); //set the pin to input
+    PCintPort::attachInterrupt(EncoderMotorRight, indexRightEncoderCount, CHANGE);
 }
 
 /**
@@ -310,11 +304,12 @@ void configure()
 */
 void idle()
 {
-  Serial.println("Idle..");
-  while (digitalRead(pushButton) == 1)
-    ; // wait for button push
-  while (digitalRead(pushButton) == 0)
-    ; // wait for button release
+    Serial.println("Idle..");
+    while (digitalRead(pushButton) == 1)
+        ; // wait for button push
+    while (digitalRead(pushButton) == 0)
+        ; // wait for button release
+    delay(2000); // Give time to move hand
 }
 
 /**
@@ -323,21 +318,21 @@ void idle()
 */
 void adjustPWM()
 {
-  // Compute the pid values
-  leftPID.Compute();
-  rightPID.Compute();
+    // Compute the pid values
+    leftPID.Compute();
+    rightPID.Compute();
 
-  // Set the pid values within range
-  motorLeft_PWM = constrain(leftOutput, 150, 250);
-  motorRight_PWM = constrain(rightOutput, 150, 235);
-  Serial.print("Left PWM: ");
-  Serial.print(motorLeft_PWM);
-  Serial.print(" ");
-  Serial.println(leftEncoderCount);
-  Serial.print("Right PWM: ");
-  Serial.print(motorRight_PWM);
-  Serial.print(" ");
-  Serial.println(rightEncoderCount);
+    // Set the pid values within range
+    motorLeft_PWM = constrain(leftOutput, 150, 250);
+    motorRight_PWM = constrain(rightOutput, 150, 235);
+    Serial.print("Left PWM: ");
+    Serial.print(motorLeft_PWM);
+    Serial.print(" ");
+    Serial.println(leftEncoderCount);
+    Serial.print("Right PWM: ");
+    Serial.print(motorRight_PWM);
+    Serial.print(" ");
+    Serial.println(rightEncoderCount);
 }
 
 /**
@@ -345,11 +340,11 @@ void adjustPWM()
 */
 void setup()
 {
-  Serial.begin(9600);
-  Serial.println("Setting up.....");
-  configure();
-  leftPID.SetMode(AUTOMATIC);
-  rightPID.SetMode(AUTOMATIC);
+    Serial.begin(9600);
+    Serial.println("Setting up.....");
+    configure();
+    leftPID.SetMode(AUTOMATIC);
+    rightPID.SetMode(AUTOMATIC);
 }
 
 /**
@@ -358,22 +353,22 @@ void setup()
 */
 void react_left()
 {
-  // TODO: Check which button was hit
+    // TODO: Check which button was hit
 
-  driveBackward(20);
-  turnRight(30);
+    driveBackward(20);
+    turnRight(30);
 }
 void react_right()
 {
-  // TODO: Check which button was hit
+    // TODO: Check which button was hit
 
-  driveBackward(20);
-  turnLeft(30);
+    driveBackward(20);
+    turnLeft(30);
 }
 void react_forward()
 {
-  // TODO: Check which button was hit
-  driveBackward(50);
+    // TODO: Check which button was hit
+    driveBackward(50);
 }
 
 /**
@@ -382,25 +377,25 @@ void react_forward()
 */
 void drive()
 {
-  // Iterate over the list jumping by two each time
-  for (int i = 0; i < sizeof(moveList); i += 2)
-  {
-    idle();
-    switch (moveList[i])
+    // Iterate over the list jumping by two each time
+    for (int i = 0; i < sizeof(moveList); i += 2)
     {
-      case LEFT:
-        turnLeft(moveList[i + 1]);
-        break;
-      case RIGHT:
-        turnRight(moveList[i + 1]);
-        break;
-      case FORWARD:
-        driveForward(moveList[i + 1]);
-        break;
-      default:
-        break;
+        idle();
+        switch (moveList[i])
+        {
+        case LEFT:
+            turnLeft(moveList[i + 1]);
+            break;
+        case RIGHT:
+            turnRight(moveList[i + 1]);
+            break;
+        case FORWARD:
+            driveForward(moveList[i + 1]);
+            break;
+        default:
+            break;
+        }
     }
-  }
 }
 
 /**
@@ -408,5 +403,5 @@ void drive()
 */
 void loop()
 {
-  drive();
+    drive();
 }
