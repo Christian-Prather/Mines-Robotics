@@ -210,7 +210,7 @@ VIN
 Text GLabel 3900 2300 0    50   Input ~ 0
 VIN
 $Comp
-L Switch:SW_MEC_5E SW?
+L robot_lab4-rescue:SW_MEC_5E-Switch SW?
 U 1 1 5F90EC23
 P 9350 3200
 F 0 "SW?" H 9350 3585 50  0000 C CNN
@@ -250,7 +250,7 @@ F 3 "http://www.vishay.com/docs/82462/tsop581.pdf" H 8500 5700 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 $Comp
-L HC-SR04:HC-SR04 U?
+L robot_lab4-rescue:HC-SR04-HC-SR04 U?
 U 1 1 5F931EF9
 P 4100 6150
 F 0 "U?" H 4530 6146 50  0000 L CNN

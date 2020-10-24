@@ -150,4 +150,5 @@
   (lib (name dk_TVS-Mixed-Technology)(type Legacy)(uri /home/christian/Documents/digikey-kicad-library/digikey-symbols/dk_TVS-Mixed-Technology.lib)(options "")(descr ""))
   (lib (name dk_USB-DVI-HDMI-Connectors)(type Legacy)(uri /home/christian/Documents/digikey-kicad-library/digikey-symbols/dk_USB-DVI-HDMI-Connectors.lib)(options "")(descr ""))
   (lib (name OPB620)(type Legacy)(uri /home/christian/Documents/Mines-Robotics/Schematic/OPB620.lib)(options "")(descr ""))
+  (lib (name robot_lab4-rescue)(type Legacy)(uri ${KIPRJMOD}/robot_lab4-rescue.lib)(options "")(descr ""))
 )

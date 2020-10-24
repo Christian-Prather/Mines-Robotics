@@ -249,4 +249,31 @@ F 3 "http://www.vishay.com/docs/82462/tsop581.pdf" H 8500 5700 50  0001 C CNN
 	1    7850 5400
 	-1   0    0    1   
 $EndComp
+$Comp
+L HC-SR04:HC-SR04 U?
+U 1 1 5F931EF9
+P 4100 6150
+F 0 "U?" H 4530 6146 50  0000 L CNN
+F 1 "HC-SR04" H 4530 6055 50  0000 L CNN
+F 2 "XCVR_HC-SR04" H 4100 6150 50  0001 L BNN
+F 3 "Osepp" H 4100 6150 50  0001 L BNN
+	1    4100 6150
+	1    0    0    -1  
+$EndComp
+Text GLabel 7450 5200 1    50   Input ~ 0
+GND
+Text GLabel 7450 5400 0    50   Input ~ 0
+PIN_A0
+Text GLabel 4450 2300 1    50   Input ~ 0
+5V
+Text GLabel 7450 5600 3    50   Input ~ 0
+5V
+Text GLabel 3900 6050 1    50   Input ~ 0
+5V
+Text GLabel 3900 6350 3    50   Input ~ 0
+GND
+Text GLabel 3900 6150 0    50   Input ~ 0
+PIN_12
+Text GLabel 3900 6250 0    50   Input ~ 0
+PIN_11
 $EndSCHEMATC
