@@ -16,6 +16,8 @@
 /// Libraries for interrupts and PID
 #include <PinChangeInt.h>
 #include <PID_v1.h>
+#include <SR04.h>
+
 
 /// Global Defines
 
