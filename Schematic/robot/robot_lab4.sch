@@ -4,9 +4,9 @@ EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
 Sheet 1 1
-Title "Lab 3 Robot"
+Title "Lab 4 Robot"
 Date "2020-10-19"
-Rev "Version 3"
+Rev "Version 3.1"
 Comp ""
 Comment1 ""
 Comment2 ""

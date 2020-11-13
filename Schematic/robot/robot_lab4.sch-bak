@@ -320,10 +320,6 @@ Wire Wire Line
 	1230 4100 1730 4100
 Connection ~ 1230 4100
 Wire Wire Line
-	1230 4200 1730 4200
-Wire Wire Line
-	1230 4300 1730 4300
-Wire Wire Line
 	1230 4400 1730 4400
 Wire Wire Line
 	1230 4500 1730 4500
@@ -473,4 +469,18 @@ PIN_A0
 Wire Wire Line
 	5600 3300 5400 3300
 Connection ~ 5400 3300
+Text GLabel 1150 4200 0    50   Input ~ 0
+PIN_11
+Text GLabel 1150 4300 0    50   Input ~ 0
+PIN_12
+Wire Wire Line
+	1150 4200 1230 4200
+Connection ~ 1230 4200
+Wire Wire Line
+	1230 4200 1730 4200
+Wire Wire Line
+	1150 4300 1230 4300
+Connection ~ 1230 4300
+Wire Wire Line
+	1230 4300 1730 4300
 $EndSCHEMATC
