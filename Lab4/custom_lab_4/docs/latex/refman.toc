@@ -1,0 +1,72 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Lab 4 Code Documentation}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}File Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}File List}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}File Documentation}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}custom\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}lab\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}4.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ino File Reference}{5}{section.3.1}%
+\contentsline {subsection}{\numberline {3.1.1}Detailed Description}{7}{subsection.3.1.1}%
+\contentsline {subsection}{\numberline {3.1.2}Macro Definition Documentation}{8}{subsection.3.1.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.1}A}{8}{subsubsection.3.1.2.1}%
+\contentsline {subsubsection}{\numberline {3.1.2.2}B}{8}{subsubsection.3.1.2.2}%
+\contentsline {subsubsection}{\numberline {3.1.2.3}DegreesPerRev}{8}{subsubsection.3.1.2.3}%
+\contentsline {subsubsection}{\numberline {3.1.2.4}dirA}{8}{subsubsection.3.1.2.4}%
+\contentsline {subsubsection}{\numberline {3.1.2.5}dirB}{8}{subsubsection.3.1.2.5}%
+\contentsline {subsubsection}{\numberline {3.1.2.6}DISTANCE\_SEG}{9}{subsubsection.3.1.2.6}%
+\contentsline {subsubsection}{\numberline {3.1.2.7}DistancePerRev}{9}{subsubsection.3.1.2.7}%
+\contentsline {subsubsection}{\numberline {3.1.2.8}EncoderCountsPerRev}{9}{subsubsection.3.1.2.8}%
+\contentsline {subsubsection}{\numberline {3.1.2.9}EncoderMotorLeft}{9}{subsubsection.3.1.2.9}%
+\contentsline {subsubsection}{\numberline {3.1.2.10}EncoderMotorRight}{9}{subsubsection.3.1.2.10}%
+\contentsline {subsubsection}{\numberline {3.1.2.11}FORWARD}{9}{subsubsection.3.1.2.11}%
+\contentsline {subsubsection}{\numberline {3.1.2.12}IN1}{10}{subsubsection.3.1.2.12}%
+\contentsline {subsubsection}{\numberline {3.1.2.13}IN2}{10}{subsubsection.3.1.2.13}%
+\contentsline {subsubsection}{\numberline {3.1.2.14}IN3}{10}{subsubsection.3.1.2.14}%
+\contentsline {subsubsection}{\numberline {3.1.2.15}IN4}{10}{subsubsection.3.1.2.15}%
+\contentsline {subsubsection}{\numberline {3.1.2.16}LEFT}{10}{subsubsection.3.1.2.16}%
+\contentsline {subsubsection}{\numberline {3.1.2.17}pushButton}{10}{subsubsection.3.1.2.17}%
+\contentsline {subsubsection}{\numberline {3.1.2.18}pwmA}{11}{subsubsection.3.1.2.18}%
+\contentsline {subsubsection}{\numberline {3.1.2.19}pwmB}{11}{subsubsection.3.1.2.19}%
+\contentsline {subsubsection}{\numberline {3.1.2.20}RIGHT}{11}{subsubsection.3.1.2.20}%
+\contentsline {subsection}{\numberline {3.1.3}Function Documentation}{11}{subsection.3.1.3}%
+\contentsline {subsubsection}{\numberline {3.1.3.1}adjustPWM()}{11}{subsubsection.3.1.3.1}%
+\contentsline {subsubsection}{\numberline {3.1.3.2}calculateDesiredCount()}{11}{subsubsection.3.1.3.2}%
+\contentsline {subsubsection}{\numberline {3.1.3.3}calculateDesiredCountTurn()}{12}{subsubsection.3.1.3.3}%
+\contentsline {subsubsection}{\numberline {3.1.3.4}configure()}{12}{subsubsection.3.1.3.4}%
+\contentsline {subsubsection}{\numberline {3.1.3.5}drive()}{13}{subsubsection.3.1.3.5}%
+\contentsline {subsubsection}{\numberline {3.1.3.6}driveBackward()}{13}{subsubsection.3.1.3.6}%
+\contentsline {subsubsection}{\numberline {3.1.3.7}driveForward()}{14}{subsubsection.3.1.3.7}%
+\contentsline {subsubsection}{\numberline {3.1.3.8}explore()}{14}{subsubsection.3.1.3.8}%
+\contentsline {subsubsection}{\numberline {3.1.3.9}idle()}{15}{subsubsection.3.1.3.9}%
+\contentsline {subsubsection}{\numberline {3.1.3.10}indexLeftEncoderCount()}{15}{subsubsection.3.1.3.10}%
+\contentsline {subsubsection}{\numberline {3.1.3.11}indexRightEncoderCount()}{16}{subsubsection.3.1.3.11}%
+\contentsline {subsubsection}{\numberline {3.1.3.12}loop()}{16}{subsubsection.3.1.3.12}%
+\contentsline {subsubsection}{\numberline {3.1.3.13}optimize()}{16}{subsubsection.3.1.3.13}%
+\contentsline {subsubsection}{\numberline {3.1.3.14}react\_forward()}{18}{subsubsection.3.1.3.14}%
+\contentsline {subsubsection}{\numberline {3.1.3.15}react\_left()}{18}{subsubsection.3.1.3.15}%
+\contentsline {subsubsection}{\numberline {3.1.3.16}react\_right()}{18}{subsubsection.3.1.3.16}%
+\contentsline {subsubsection}{\numberline {3.1.3.17}readDistance()}{19}{subsubsection.3.1.3.17}%
+\contentsline {subsubsection}{\numberline {3.1.3.18}resetPWM()}{19}{subsubsection.3.1.3.18}%
+\contentsline {subsubsection}{\numberline {3.1.3.19}setup()}{19}{subsubsection.3.1.3.19}%
+\contentsline {subsubsection}{\numberline {3.1.3.20}turnLeft()}{20}{subsubsection.3.1.3.20}%
+\contentsline {subsubsection}{\numberline {3.1.3.21}turnRight()}{20}{subsubsection.3.1.3.21}%
+\contentsline {subsection}{\numberline {3.1.4}Variable Documentation}{21}{subsection.3.1.4}%
+\contentsline {subsubsection}{\numberline {3.1.4.1}desiredCount}{21}{subsubsection.3.1.4.1}%
+\contentsline {subsubsection}{\numberline {3.1.4.2}echo}{21}{subsubsection.3.1.4.2}%
+\contentsline {subsubsection}{\numberline {3.1.4.3}irSensor}{21}{subsubsection.3.1.4.3}%
+\contentsline {subsubsection}{\numberline {3.1.4.4}leftEncoderCount}{22}{subsubsection.3.1.4.4}%
+\contentsline {subsubsection}{\numberline {3.1.4.5}leftOutput}{22}{subsubsection.3.1.4.5}%
+\contentsline {subsubsection}{\numberline {3.1.4.6}milliSecondsPer90Deg}{22}{subsubsection.3.1.4.6}%
+\contentsline {subsubsection}{\numberline {3.1.4.7}motorLeft\_PWM}{22}{subsubsection.3.1.4.7}%
+\contentsline {subsubsection}{\numberline {3.1.4.8}motorRight\_PWM}{22}{subsubsection.3.1.4.8}%
+\contentsline {subsubsection}{\numberline {3.1.4.9}moveList}{23}{subsubsection.3.1.4.9}%
+\contentsline {subsubsection}{\numberline {3.1.4.10}movesCount}{23}{subsubsection.3.1.4.10}%
+\contentsline {subsubsection}{\numberline {3.1.4.11}optimizedMoves}{23}{subsubsection.3.1.4.11}%
+\contentsline {subsubsection}{\numberline {3.1.4.12}rightEncoderCount}{23}{subsubsection.3.1.4.12}%
+\contentsline {subsubsection}{\numberline {3.1.4.13}rightOutput}{23}{subsubsection.3.1.4.13}%
+\contentsline {subsubsection}{\numberline {3.1.4.14}sideUS}{23}{subsubsection.3.1.4.14}%
+\contentsline {subsubsection}{\numberline {3.1.4.15}trig}{24}{subsubsection.3.1.4.15}%
+\contentsline {subsubsection}{\numberline {3.1.4.16}wallDist}{24}{subsubsection.3.1.4.16}%
+\contentsline {section}{\numberline {3.2}motors.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}ino File Reference}{24}{section.3.2}%
+\contentsline {subsection}{\numberline {3.2.1}Function Documentation}{24}{subsection.3.2.1}%
+\contentsline {subsubsection}{\numberline {3.2.1.1}motor\_setup()}{24}{subsubsection.3.2.1.1}%
+\contentsline {subsubsection}{\numberline {3.2.1.2}run\_motor()}{25}{subsubsection.3.2.1.2}%
+\contentsline {chapter}{Index}{27}{section*.6}%

@@ -1,0 +1,3 @@
+/home/christian/Documents/Mines-Robotics/Lab4/optimizationAlgorithm/build/CMakeFiles/rebuild_cache.dir
+/home/christian/Documents/Mines-Robotics/Lab4/optimizationAlgorithm/build/CMakeFiles/edit_cache.dir
+/home/christian/Documents/Mines-Robotics/Lab4/optimizationAlgorithm/build/CMakeFiles/optimize.dir

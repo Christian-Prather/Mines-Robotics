@@ -1,0 +1,1 @@
+/usr/bin/c++     CMakeFiles/optimize.dir/main.cpp.o  -o optimize 

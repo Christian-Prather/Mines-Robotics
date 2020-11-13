@@ -1,0 +1,87 @@
+\hypertarget{motors_8ino}{}\doxysection{motors.\+ino File Reference}
+\label{motors_8ino}\index{motors.ino@{motors.ino}}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{motors_8ino_adf003d086ffc3ea127fb361097b6bb44}{motor\+\_\+setup}} ()
+\item 
+void \mbox{\hyperlink{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}{run\+\_\+motor}} (int motor, int pwm)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{motors_8ino_adf003d086ffc3ea127fb361097b6bb44}\label{motors_8ino_adf003d086ffc3ea127fb361097b6bb44}} 
+\index{motors.ino@{motors.ino}!motor\_setup@{motor\_setup}}
+\index{motor\_setup@{motor\_setup}!motors.ino@{motors.ino}}
+\doxysubsubsection{\texorpdfstring{motor\_setup()}{motor\_setup()}}
+{\footnotesize\ttfamily void motor\+\_\+setup (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line 1 of file motors.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{2 \{}
+\DoxyCodeLine{3   \textcolor{comment}{// if using dual motor driver}}
+\DoxyCodeLine{4   \textcolor{comment}{// define driver pins as outputs}}
+\DoxyCodeLine{5   pinMode(\mbox{\hyperlink{custom__lab__4_8ino_aa118db89564189dcf8c48ecbd79937d8}{IN1}}, OUTPUT);}
+\DoxyCodeLine{6   pinMode(\mbox{\hyperlink{custom__lab__4_8ino_ac2c663eb7de5a963911af77b65451fb6}{IN2}}, OUTPUT);}
+\DoxyCodeLine{7   pinMode(\mbox{\hyperlink{custom__lab__4_8ino_ae24e8a55f5b9660a35dc5cf8a5e8ba4a}{IN3}}, OUTPUT);}
+\DoxyCodeLine{8   pinMode(\mbox{\hyperlink{custom__lab__4_8ino_a38caa48612155e36696b60d2aabc25ff}{IN4}}, OUTPUT);}
+\DoxyCodeLine{9   \textcolor{comment}{// initialize all pins to zero}}
+\DoxyCodeLine{10   digitalWrite(\mbox{\hyperlink{custom__lab__4_8ino_aa118db89564189dcf8c48ecbd79937d8}{IN1}}, 0);}
+\DoxyCodeLine{11   digitalWrite(\mbox{\hyperlink{custom__lab__4_8ino_ac2c663eb7de5a963911af77b65451fb6}{IN2}}, 0);}
+\DoxyCodeLine{12   digitalWrite(\mbox{\hyperlink{custom__lab__4_8ino_ae24e8a55f5b9660a35dc5cf8a5e8ba4a}{IN3}}, 0);}
+\DoxyCodeLine{13   digitalWrite(\mbox{\hyperlink{custom__lab__4_8ino_a38caa48612155e36696b60d2aabc25ff}{IN4}}, 0);}
+\DoxyCodeLine{14   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{15 \} \textcolor{comment}{// end function}}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}\label{motors_8ino_a1252137a14c37fae952c1e9a5baa60ea}} 
+\index{motors.ino@{motors.ino}!run\_motor@{run\_motor}}
+\index{run\_motor@{run\_motor}!motors.ino@{motors.ino}}
+\doxysubsubsection{\texorpdfstring{run\_motor()}{run\_motor()}}
+{\footnotesize\ttfamily void run\+\_\+motor (\begin{DoxyParamCaption}\item[{int}]{motor,  }\item[{int}]{pwm }\end{DoxyParamCaption})}
+
+
+
+Definition at line 19 of file motors.\+ino.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{20 \{}
+\DoxyCodeLine{21   \textcolor{keywordtype}{int} dir = (pwm / abs(pwm)) > 0; \textcolor{comment}{// returns if direction is forward (1) or reverse (0)}}
+\DoxyCodeLine{22   pwm = abs(pwm);                 \textcolor{comment}{// only positive values can be sent to the motor}}
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24   \textcolor{keywordflow}{switch} (motor)}
+\DoxyCodeLine{25   \{       \textcolor{comment}{// find which motor to control}}
+\DoxyCodeLine{26   \textcolor{keywordflow}{case} \mbox{\hyperlink{custom__lab__4_8ino_a955f504eccf76b4eb2489c0adab03121}{A}}: \textcolor{comment}{// if A, write A pins}}
+\DoxyCodeLine{27     \textcolor{keywordflow}{if} (dir)}
+\DoxyCodeLine{28     \{                         \textcolor{comment}{// If dir is forward}}
+\DoxyCodeLine{29       analogWrite(\mbox{\hyperlink{custom__lab__4_8ino_aa118db89564189dcf8c48ecbd79937d8}{IN1}}, pwm);  \textcolor{comment}{// IN1 is the forward pwm pin}}
+\DoxyCodeLine{30       digitalWrite(\mbox{\hyperlink{custom__lab__4_8ino_ac2c663eb7de5a963911af77b65451fb6}{IN2}}, LOW); \textcolor{comment}{// IN2 is low}}
+\DoxyCodeLine{31     \}}
+\DoxyCodeLine{32     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{33     \{}
+\DoxyCodeLine{34       digitalWrite(\mbox{\hyperlink{custom__lab__4_8ino_aa118db89564189dcf8c48ecbd79937d8}{IN1}}, LOW); \textcolor{comment}{// IN1 is low}}
+\DoxyCodeLine{35       analogWrite(\mbox{\hyperlink{custom__lab__4_8ino_ac2c663eb7de5a963911af77b65451fb6}{IN2}}, pwm);  \textcolor{comment}{// IN2 is the reverse pwm pin}}
+\DoxyCodeLine{36     \}                         \textcolor{comment}{// end if}}
+\DoxyCodeLine{37     \textcolor{keywordflow}{break};                    \textcolor{comment}{// end case A}}
+\DoxyCodeLine{38   \textcolor{keywordflow}{case} \mbox{\hyperlink{custom__lab__4_8ino_a111da81ae5883147168bbb8366377b10}{B}}:                     \textcolor{comment}{// if B, write B pins}}
+\DoxyCodeLine{39     \textcolor{keywordflow}{if} (dir)}
+\DoxyCodeLine{40     \{                         \textcolor{comment}{// if dir is forward}}
+\DoxyCodeLine{41       analogWrite(\mbox{\hyperlink{custom__lab__4_8ino_ae24e8a55f5b9660a35dc5cf8a5e8ba4a}{IN3}}, pwm);  \textcolor{comment}{// IN3 is the forward pwm pin}}
+\DoxyCodeLine{42       digitalWrite(\mbox{\hyperlink{custom__lab__4_8ino_a38caa48612155e36696b60d2aabc25ff}{IN4}}, LOW); \textcolor{comment}{// IN4 is low}}
+\DoxyCodeLine{43     \}}
+\DoxyCodeLine{44     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{45     \{}
+\DoxyCodeLine{46       digitalWrite(\mbox{\hyperlink{custom__lab__4_8ino_ae24e8a55f5b9660a35dc5cf8a5e8ba4a}{IN3}}, LOW); \textcolor{comment}{//IN3 is low}}
+\DoxyCodeLine{47       analogWrite(\mbox{\hyperlink{custom__lab__4_8ino_a38caa48612155e36696b60d2aabc25ff}{IN4}}, pwm);  \textcolor{comment}{// IN4 is the reverse pwm pin}}
+\DoxyCodeLine{48     \}                         \textcolor{comment}{// end if}}
+\DoxyCodeLine{49     \textcolor{keywordflow}{break};                    \textcolor{comment}{// end case B}}
+\DoxyCodeLine{50   \}                           \textcolor{comment}{// end switch case}}
+\DoxyCodeLine{51   \textcolor{keywordflow}{return};}
+\DoxyCodeLine{52 \} \textcolor{comment}{// end function}}
+
+\end{DoxyCode}

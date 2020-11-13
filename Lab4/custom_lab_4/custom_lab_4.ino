@@ -8,31 +8,29 @@
 
 */
 
-/*! \mainpage Lab 3 Code Documentation
+
+/*! \mainpage Lab 4 Code Documentation
  *
  */
-
 
 /// Libraries for interrupts and PID
 #include <PinChangeInt.h>
 #include <PID_v1.h>
 #include <SR04.h>
 
-
 /// Global Defines
-
 /// Motor driver connections
-#define IN1 9
-#define IN2 10
-#define IN3 5
-#define IN4 6
+#define IN1 5
+#define IN2 6
+#define IN3 7
+#define IN4 8
 
 /// Motor control
 #define A 0
 #define B 1
 #define pwmA 3
-#define dirA 12
-#define pwmB 11
+#define dirA 9
+#define pwmB 4
 #define dirB 13
 
 /// Start stop button
@@ -49,11 +47,21 @@
 /// Lab specific variables
 double leftEncoderCount = 0;
 double rightEncoderCount = 0;
+int wallDist = 5; /// CM
+#define DISTANCE_SEG 10
 
 /// Enum defines
 #define FORWARD 0
-#define LEFT 1
-#define RIGHT -1
+#define RIGHT 1
+#define LEFT 2
+
+/// IR sensors
+int irSensor = A0;
+
+/// Ultrasonic sensors
+int trig = 12;
+int echo = 11;
+SR04 sideUS = SR04(trig, echo);
 
 /// Default motor pwm values
 int motorLeft_PWM = 180;
@@ -65,8 +73,11 @@ int milliSecondsPer90Deg = 900;
 /// How many encoder counts for given distance
 double desiredCount;
 
+int movesCount = 0;
 // Global array for tracking move order (move, distance) or (move, degree)
-int moveList[] = {FORWARD, 300, LEFT, 90, FORWARD, 300, LEFT, 90, FORWARD, 300, RIGHT, 90, FORWARD, 900, RIGHT, 90, FORWARD, 600, RIGHT, 90, FORWARD, 300};
+int moveList[50];
+
+int optimizedMoves[50];
 
 /**
    @brief PID values
@@ -83,6 +94,29 @@ void resetPWM()
 {
     motorLeft_PWM = 180;
     motorRight_PWM = 200;
+}
+
+/**
+   @brief Run the PID loop calculation and set out put to motors output in PWM
+
+*/
+void adjustPWM()
+{
+    // Compute the pid values
+    leftPID.Compute();
+    rightPID.Compute();
+
+    // Set the pid values within range
+    motorLeft_PWM = constrain(leftOutput, 150, 250);
+    motorRight_PWM = constrain(rightOutput, 150, 235);
+    Serial.print("Left PWM: ");
+    Serial.print(motorLeft_PWM);
+    Serial.print(" ");
+    Serial.println(leftEncoderCount);
+    Serial.print("Right PWM: ");
+    Serial.print(motorRight_PWM);
+    Serial.print(" ");
+    Serial.println(rightEncoderCount);
 }
 
 /**
@@ -286,6 +320,208 @@ void driveBackward(int distance)
 }
 
 /**
+ * @brief Function for reading the distance sensors 
+ * 
+ * @param sensor 0 = IR, 1 = Ultrasonic
+ * @return float distance (cm)
+ */
+float readDistance(int sensor)
+{
+    float distance = 0.0;
+    switch (sensor)
+    {
+    case 0:
+        int reading = analogRead(irSensor);
+        distance = ((0.00031) * reading) + 0.002;
+        break;
+    case 1:
+        distance = sideUS.Distance();
+        break;
+
+    default:
+        break;
+    }
+    return distance;
+}
+
+/**
+ * @brief The exploritory function to allow the system to navigate unseen envioronment
+ * Using left hand rule
+ */
+void explore()
+{
+    while (digitalRead(pushButton) == 1)
+    {
+        float front = readDistance(0);
+        float side = readDistance(1);
+
+        /// There is no wall to left of bot
+        if (side > wallDist)
+        {
+            turnLeft(90);
+            /// Not recording degrees as the assumption is every turn on 90 degrees
+            moveList[movesCount] = "LEFT";
+            movesCount++;
+        }
+        /// Can drive forward
+        else if (front > wallDist)
+        {
+            driveForward(DISTANCE_SEG);
+            moveList[movesCount] = "FORWARD";
+            movesCount++;
+        }
+        /// Trapped turn Right
+        else
+        {
+            turnRight(90);
+            moveList[movesCount] = "RIGHT";
+            movesCount++;
+        }
+    }
+}
+
+/**
+ * @brief This is what youve all been waiting for one darn good looking 
+ * solution to maze optimation. Iterates over the movesList looking for 
+ * specific patterns it can reduce into simpler sequences
+ * Key assumption: Explored using Left hand rule
+ */
+void optimize()
+{
+    /// Key patterns 0 = F, 1 = R, 2 = L, 3 = DELETE
+    int keyPatterns_6[2][6] = {{0, 0, 1, 1, 0, 0}, {2, 0, 1, 1, 0, 2}};
+    int keyPatterns_5[2][5] = {{2, 0, 1, 1, 0}, {0, 1, 1, 0, 2}};
+    int keyPatterns_4[1][4] = {{0, 1, 1, 0}};
+
+    int optimizedPattern_6[1][8] = {{FORWARD, 2 * DISTANCE_SEG, RIGHT, 90, RIGHT, 90, FORWARD, DISTANCE_SEG}};
+    int optimizedPattern_5[2][2] = {{RIGHT, 90}, {RIGHT, 90}};
+    int optimizedPatter_4[1][4] = {{LEFT, 90, LEFT, 90}};
+    /** This is going to be checking in a priority tree fashion given highest priority
+    * given highest priority patterns are 6 long then 5 long then 4 I can batch this
+    */
+    for (int i = 0; i < movesCount; i++)
+    {
+        /// Get next move in explored list
+        // int move = moveList[i];
+        /// Get next 6 moves if enough in list
+
+        // Check 6 out first
+        int future[6];
+        for (int j = 0; j < 6; j++)
+        {
+            if ((j + i) < movesCount)
+            {
+                future[j] = moveList[j + i];
+            }
+        }
+        int tracker = 0;
+        for (auto potential : keyPatterns_6)
+        {
+            bool match = true;
+            for (int m = 0; m < 6; m++)
+            {
+                if (future[m] != potential[m])
+                {
+                    match = false;
+                }
+            }
+            if (match)
+            {
+                int keyPatternLength = (sizeof(potential) / sizeof(potential[0]));
+                // Insert optimized move
+                for (int x = 0; x < (sizeof(optimizedPattern_6[tracker]) / sizeof(optimizedPattern_6[tracker][0])); x++)
+                {
+                    if (optimizedPattern_6[tracker][x] != 3)
+                    {
+                        optimizedMoves[x] = optimizedPattern_6[tracker][x];
+                    }
+                }
+                i = i + 6;
+                break;
+            }
+            tracker = tracker + 1;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////
+        // Check 5 out first
+        int future_5[5];
+        for (int j = 0; j < 5; j++)
+        {
+            if ((j + i) < movesCount)
+            {
+                future_5[j] = moveList[j + i];
+            }
+        }
+        tracker = 0;
+        for (auto potential : keyPatterns_6)
+        {
+            bool match = true;
+            for (int m = 0; m < 5; m++)
+            {
+                if (future_5[m] != potential[m])
+                {
+                    match = false;
+                }
+            }
+            if (match)
+            {
+                int keyPatternLength = (sizeof(potential) / sizeof(potential[0]));
+                // Insert optimized move
+                for (int x = 0; x < (sizeof(optimizedPattern_6[tracker]) / sizeof(optimizedPattern_6[tracker][0])); x++)
+                {
+                    if (optimizedPattern_6[tracker][x] != 3)
+                    {
+                        optimizedMoves[x] = optimizedPattern_6[tracker][x];
+                    }
+                }
+                i = i + 5;
+                break;
+            }
+            tracker = tracker + 1;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////
+        // Check 4 out first
+        int future_4[4];
+        for (int j = 0; j < 4; j++)
+        {
+            if ((j + i) < movesCount)
+            {
+                future_4[j] = moveList[j + i];
+            }
+        }
+        tracker = 0;
+        for (auto potential : keyPatterns_6)
+        {
+            bool match = true;
+            for (int m = 0; m < 4; m++)
+            {
+                if (future_4[m] != potential[m])
+                {
+                    match = false;
+                }
+            }
+            if (match)
+            {
+                int keyPatternLength = (sizeof(potential) / sizeof(potential[0]));
+                // Insert optimized move
+                for (int x = 0; x < (sizeof(optimizedPattern_6[tracker]) / sizeof(optimizedPattern_6[tracker][0])); x++)
+                {
+                    if (optimizedPattern_6[tracker][x] != 3)
+                    {
+                        optimizedMoves[x] = optimizedPattern_6[tracker][x];
+                    }
+                }
+                i = i + 4;
+                break;
+            }
+            tracker = tracker + 1;
+        }
+    }
+}
+
+
+/**
    @brief Function for configuration of pin states and interrupts
 */
 void configure()
@@ -316,31 +552,8 @@ void idle()
     while (digitalRead(pushButton) == 1)
         ; // wait for button push
     while (digitalRead(pushButton) == 0)
-        ; // wait for button release
+        ;        // wait for button release
     delay(2000); // Give time to move hand
-}
-
-/**
-   @brief Run the PID loop calculation and set out put to motors output in PWM
-
-*/
-void adjustPWM()
-{
-    // Compute the pid values
-    leftPID.Compute();
-    rightPID.Compute();
-
-    // Set the pid values within range
-    motorLeft_PWM = constrain(leftOutput, 150, 250);
-    motorRight_PWM = constrain(rightOutput, 150, 235);
-    Serial.print("Left PWM: ");
-    Serial.print(motorLeft_PWM);
-    Serial.print(" ");
-    Serial.println(leftEncoderCount);
-    Serial.print("Right PWM: ");
-    Serial.print(motorRight_PWM);
-    Serial.print(" ");
-    Serial.println(rightEncoderCount);
 }
 
 /**
@@ -386,7 +599,7 @@ void react_forward()
 void drive()
 {
     // Iterate over the list jumping by two each time
-    for (int i = 0; i < sizeof(moveList); i += 2)
+    for (int i = 0; i < sizeof(optimizedMoves); i += 2)
     {
         idle();
         switch (moveList[i])
@@ -404,6 +617,7 @@ void drive()
             break;
         }
     }
+    
 }
 
 /**
@@ -411,5 +625,7 @@ void drive()
 */
 void loop()
 {
+    explore();
+    optimize();
     drive();
 }

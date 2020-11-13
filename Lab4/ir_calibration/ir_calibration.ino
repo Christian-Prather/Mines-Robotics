@@ -1,4 +1,4 @@
-
+/// Basic calibration program for IR sensor
 int irSensor = A1;
 int pushButton = 2;
 
